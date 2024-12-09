@@ -318,6 +318,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         });
 
+
+        document.getElementById('forgot-password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            // Show loading alert
+            Swal.fire({
+                title: 'Processing...',
+                html: 'Please wait while we process your request',
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                position: 'top-end',
+                toast: true,
+                showConfirmButton: false
+            });
+
+            fetch('forgot-password.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Close loading alert
+                Swal.close();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Email Sent',
+                    text: data,
+                    position: 'top-end',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            })
+            .catch(error => {
+                // Close loading alert
+                Swal.close();
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An unexpected error occurred. Please try again.',
+                    position: 'top-end',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            });
+        });
+
+
         grecaptcha.ready(function () {
             grecaptcha.execute('6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK', { action: 'submit' }).then(function (token) {
                 document.getElementById('g-recaptcha-response').value = token;
