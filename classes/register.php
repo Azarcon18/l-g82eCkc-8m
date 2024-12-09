@@ -80,7 +80,7 @@ class RegisterUser extends DBConnection {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com'; // Use your domain's SMTP server
             $mail->SMTPAuth = true;
-                       $mail->Username = 'jagdonjohncarlo0714@gmail.com'; // SMTP username
+            $mail->Username = 'jagdonjohncarlo0714@gmail.com'; // SMTP username
             $mail->Password = 'wlyl kbyt mjam fhzv'; // SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
@@ -92,7 +92,7 @@ class RegisterUser extends DBConnection {
             $mail->addCustomHeader('Importance', 'high');
     
             //Recipients
-            $mail->setFrom('noreply@yourdomain.com', 'Your Company Name');
+            $mail->setFrom('jagdonjohncarlo0714@gmail.com', 'ICP MADRIDEJOS');
             $mail->addAddress($email);
     
             // Content

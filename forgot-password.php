@@ -1,35 +1,55 @@
 <?php
-// forgot_password.php
+require_once('config.php');
+require 'vendor/autoload.php'; // Include Composer's autoloader
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once('config.php');
-
     $email = $_POST['email'];
-    $token = bin2hex(random_bytes(50)); // Generate a random token
 
-    // Check if email exists in the database
-    $query = "SELECT * FROM users WHERE email = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Check if the email exists in the database
+    $stmt = $pdo->prepare("SELECT user_id FROM registered_users WHERE email = :email");
+    $stmt->execute(['email' => $email]);
+    $user = $stmt->fetch();
 
-    if ($result->num_rows > 0) {
-        // Update the database with the reset token
-        $query = "UPDATE users SET reset_token = ? WHERE email = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("ss", $token, $email);
-        $stmt->execute();
+    if ($user) {
+        // Generate a unique token
+        $token = bin2hex(random_bytes(50));
+        $token_expired_at = date('Y-m-d H:i:s', strtotime('+1 hour')); // Token valid for 1 hour
 
-        // Send the reset link to the user's email
-        $resetLink = "https://yourwebsite.com/reset_password.php?token=" . $token;
-        $subject = "Password Reset Request";
-        $message = "Click the following link to reset your password: " . $resetLink;
-        $headers = "From: no-reply@yourwebsite.com";
+        // Update the database with the token and expiration time
+        $stmt = $pdo->prepare("UPDATE registered_users SET token = :token, token_expired_at = :token_expired_at WHERE email = :email");
+        $stmt->execute(['token' => $token, 'token_expired_at' => $token_expired_at, 'email' => $email]);
 
-        if (mail($email, $subject, $message, $headers)) {
-            echo "A password reset link has been sent to your email.";
-        } else {
-            echo "There was an error sending the email. Please try again later.";
+        // Send the reset email using PHPMailer
+        $mail = new PHPMailer(true);
+
+        try {
+            //Server settings
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com'; // Use your domain's SMTP server
+            $mail->SMTPAuth = true;
+            $mail->Username = 'jagdonjohncarlo0714@gmail.com'; // SMTP username
+            $mail->Password = 'wlyl kbyt mjam fhzv'; // SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+    
+
+            //Recipients
+            $mail->setFrom('jagdonjohncarlo0714@gmail.com', 'ICP MADRIDEJOS');
+            $mail->addAddress($email);
+
+            // Content
+            $resetLink = "http://localhost/immaculateconception/reset-password.php?token=$token";
+            $mail->isHTML(true);
+            $mail->Subject = 'Password Reset Request';
+            $mail->Body    = "Click the following link to reset your password: <a href='$resetLink'>$resetLink</a>";
+
+            $mail->send();
+            echo 'An email has been sent to your email address with instructions to reset your password.';
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
     } else {
         echo "No account found with that email address.";

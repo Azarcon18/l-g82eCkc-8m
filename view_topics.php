@@ -14,7 +14,7 @@ $sub_title = "";
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-2 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3 justify-content-center">
-           
+            
             <?php 
                 $whereData = "";
                 $categories = $conn->query("SELECT * FROM `topics` where status = 1 order by name asc ");
