@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $conn->close();
 
                 // Redirect to the home page
-                header("Location: http://localhost/immaculateconception/");
+                header("Location: https://icpmadridejos.com/immaculateconception/");
                 exit;
             } else {
                 // Invalid password
