@@ -374,7 +374,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 document.getElementById('signup-form').addEventListener('submit', function (e) {
     // ... existing code ...
 
-    // Add terms of service check
+    // Add terms of serv ice check
     const termsCheckbox = document.getElementById('terms-of-service');
     if (!termsCheckbox.checked) {
         Swal.fire({
