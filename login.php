@@ -86,7 +86,7 @@ if (substr($request, -4) == '.php') {
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                        <div class="modal-body">
                     <form id="signup-form">
                     <div class="form-group">
     <label for="name" class="control-label">Full Name</label>
