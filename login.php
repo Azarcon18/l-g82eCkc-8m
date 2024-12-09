@@ -102,10 +102,21 @@ if (substr($request, -4) == '.php') {
     >
 </div>
 
-                        <div class="form-group">
-                            <label for="user_name" class="control-label">Username</label>
-                            <input type="text" class="form-control" name="user_name" required>
-                        </div>
+                        <div class="modal-body">
+                    <form id="signup-form">
+                    <div class="form-group">
+    <label for="name" class="control-label">Username</label>
+    <input 
+        type="text" 
+        class="form-control" 
+        id="name" 
+        name="name" 
+        pattern="^[A-Za-z\s'-]+$" 
+        title="Please enter only letters, spaces, hyphens, and apostrophes" 
+        required 
+        oninput="sanitizeName(this)"
+    >
+</div>
                         <div class="form-group">
                             <label for="email" class="control-label">Email</label>
                             <input type="email" class="form-control" name="email" required>
