@@ -134,15 +134,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <option value="married">Married</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="terms-of-service" name="terms_accepted" required>
-                                <label class="custom-control-label" for="terms-of-service">
-                                    I have read and agree to the <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a>
-                                </label>
-                            </div>
-                        </div>
+                        <div class="g-recaptcha mb-3" data-sitekey="6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK"></div>
                         <!-- Modify the existing signup form in the modal body -->
+<div class="form-group">
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="terms-of-service" name="terms_accepted" required>
+        <label class="custom-control-label" for="terms-of-service">
+            I have read and agree to the <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a>
+        </label>
+    </div>
+</div>
 
 <!-- Add this Terms of Service Modal -->
 <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
@@ -190,7 +191,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </div>
-
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Sign Up</button>
@@ -233,6 +233,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script>
+        
         function togglePasswordVisibility(fieldId, toggleButton) {
             const passwordField = document.getElementById(fieldId);
             const icon = toggleButton.querySelector('i');
@@ -248,33 +249,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         function isStrongPassword(password) {
+            // Define what constitutes a strong password
             const strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
             return strongPasswordPattern.test(password);
         }
 
         function suggestStrongPassword() {
-            const length = 12;
-            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*?&";
-            let password = "";
+        const length = 12;
+        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*?&";
+        let password = "";
 
-            const categories = [
-                "abcdefghijklmnopqrstuvwxyz", 
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 
-                "0123456789",                 
-                "@$!%*?&"                     
-            ];
+        // Ensure the password contains at least one character from each category
+        const categories = [
+            "abcdefghijklmnopqrstuvwxyz", // Lowercase
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ", // Uppercase
+            "0123456789",                 // Numbers
+            "@$!%*?&"                     // Special characters
+        ];
 
-            categories.forEach(category => {
-                password += category.charAt(Math.floor(Math.random() * category.length));
-            });
+        // Add one character from each category to ensure diversity
+        categories.forEach(category => {
+            password += category.charAt(Math.floor(Math.random() * category.length));
+        });
 
-            for (let i = password.length; i < length; ++i) {
-                password += charset.charAt(Math.floor(Math.random() * charset.length));
-            }
+        // Fill the rest of the password length with random characters from the charset
+        for (let i = password.length; i < length; ++i) {
+            password += charset.charAt(Math.floor(Math.random() * charset.length));
+        }
 
-            password = password.split('').sort(() => 0.5 - Math.random()).join('');
+        // Shuffle the password to ensure randomness
+        password = password.split('').sort(() => 0.5 - Math.random()).join('');
 
-            document.getElementById('signup-password').value = password;
+        document.getElementById('signup-password').value = password;
         }
 
         document.getElementById('signup-form').addEventListener('submit', function (e) {
@@ -297,13 +303,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 return;
             }
 
-            // Check terms of service
-            const termsCheckbox = document.getElementById('terms-of-service');
-            if (!termsCheckbox.checked) {
+            // Get reCAPTCHA response
+            var recaptchaResponse = grecaptcha.getResponse();
+            if (recaptchaResponse.length === 0) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Terms of Service',
-                    text: 'You must agree to the Terms of Service to create an account.',
+                    title: 'reCAPTCHA Error',
+                    text: 'Please complete the reCAPTCHA verification.',
                     position: 'top-end',
                     toast: true,
                     showConfirmButton: false,
@@ -314,6 +320,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             var formData = new FormData(this);
             formData.append('action', 'register');
+            formData.append('g-recaptcha-response', recaptchaResponse);
 
             // Show loading alert
             Swal.fire({
@@ -368,31 +375,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 });
             });
         });
-    </script>   
-    <!-- Modify the signup form submission validation in JavaScript -->
-<script>
-document.getElementById('signup-form').addEventListener('submit', function (e) {
-    // ... existing code ...
 
-    // Add terms of service check
-    const termsCheckbox = document.getElementById('terms-of-service');
-    if (!termsCheckbox.checked) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Terms of Service',
-            text: 'You must agree to the Terms of Service to create an account.',
-            position: 'top-end',
-            toast: true,
-            showConfirmButton: false,
-            timer: 3000
-        });
-        e.preventDefault();
-        return;
-    }
 
-    // ... rest of existing submission code ...
-});
-document.getElementById('forgot-password-form').addEventListener('submit', function(e) {
+        document.getElementById('forgot-password-form').addEventListener('submit', function(e) {
             e.preventDefault();
 
             var formData = new FormData(this);
@@ -445,7 +430,14 @@ document.getElementById('forgot-password-form').addEventListener('submit', funct
                 });
             });
         });
-</script>
+
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK', { action: 'submit' }).then(function (token) {
+                document.getElementById('g-recaptcha-response').value = token;
+            });
+        });
+        
+    </script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <?php require_once('inc/footer.php'); ?>
