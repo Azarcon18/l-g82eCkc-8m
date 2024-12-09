@@ -134,6 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <option value="married">Married</option>
                             </select>
                         </div>
+                        <div class="g-recaptcha mb-3" data-sitekey="6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK"></div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Sign Up</button>
