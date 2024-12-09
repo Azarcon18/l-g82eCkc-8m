@@ -1,19 +1,19 @@
 <?php require_once('config.php');
-//if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  //  $recaptchaSecret = '6LfCPpMqAAAAAE4pB5LZP4P_TUqHsKnnt3J465OP'; // Replace with your secret key
-    //$recaptchaResponse = $_POST['g-recaptcha-response']; // User's response token
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $recaptchaSecret = '6LfCPpMqAAAAAE4pB5LZP4P_TUqHsKnnt3J465OP'; // Replace with your secret key
+    $recaptchaResponse = $_POST['g-recaptcha-response']; // User's response token
 
     // Verify reCAPTCHA with Google
-    //$verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$recaptchaSecret}&response={$recaptchaResponse}");
-    //$response = json_decode($verify);
+    $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$recaptchaSecret}&response={$recaptchaResponse}");
+    $response = json_decode($verify);
 
     // Check if reCAPTCHA validation is successful
-    //if (!$response->success || $response->score < 0.5) { // Adjust the score threshold as needed
-        //die('reCAPTCHA verification failed. Please try again.');
-    //}
+    if (!$response->success || $response->score < 0.5) { // Adjust the score threshold as needed
+        die('reCAPTCHA verification failed. Please try again.');
+    }
 
     // Proceed with login/signup logic here
-//}
+}
 ?>
 
 <?php if (isset($_SESSION['error'])): ?>
@@ -25,7 +25,7 @@
     </div>
 <?php endif; ?>
 
-<!--<script src="https://www.google.com/recaptcha/api.js?render=6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK"></script>-->
+<script src="https://www.google.com/recaptcha/api.js?render=6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK"></script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -134,16 +134,15 @@
                                 <option value="married">Married</option>
                             </select>
                         </div>
-                    <!--<div class="g-recaptcha mb-3" data-sitekey="6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK"></div>-->
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="terms-of-service" name="terms_accepted" required>
+                                <label class="custom-control-label" for="terms-of-service">
+                                    I have read and agree to the <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a>
+                                </label>
+                            </div>
+                        </div>
                         <!-- Modify the existing signup form in the modal body -->
-<div class="form-group">
-    <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="terms-of-service" name="terms_accepted" required>
-        <label class="custom-control-label" for="terms-of-service">
-            I have read and agree to the <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a>
-        </label>
-    </div>
-</div>
 
 <!-- Add this Terms of Service Modal -->
 <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
@@ -191,6 +190,7 @@
         </div>
     </div>
 </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Sign Up</button>
@@ -233,7 +233,6 @@
     </div>
 
     <script>
-        
         function togglePasswordVisibility(fieldId, toggleButton) {
             const passwordField = document.getElementById(fieldId);
             const icon = toggleButton.querySelector('i');
@@ -249,38 +248,33 @@
         }
 
         function isStrongPassword(password) {
-            // Define what constitutes a strong password
             const strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
             return strongPasswordPattern.test(password);
         }
 
         function suggestStrongPassword() {
-        const length = 12;
-        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*?&";
-        let password = "";
+            const length = 12;
+            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*?&";
+            let password = "";
 
-        // Ensure the password contains at least one character from each category
-        const categories = [
-            "abcdefghijklmnopqrstuvwxyz", // Lowercase
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ", // Uppercase
-            "0123456789",                 // Numbers
-            "@$!%*?&"                     // Special characters
-        ];
+            const categories = [
+                "abcdefghijklmnopqrstuvwxyz", 
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 
+                "0123456789",                 
+                "@$!%*?&"                     
+            ];
 
-        // Add one character from each category to ensure diversity
-        categories.forEach(category => {
-            password += category.charAt(Math.floor(Math.random() * category.length));
-        });
+            categories.forEach(category => {
+                password += category.charAt(Math.floor(Math.random() * category.length));
+            });
 
-        // Fill the rest of the password length with random characters from the charset
-        for (let i = password.length; i < length; ++i) {
-            password += charset.charAt(Math.floor(Math.random() * charset.length));
-        }
+            for (let i = password.length; i < length; ++i) {
+                password += charset.charAt(Math.floor(Math.random() * charset.length));
+            }
 
-        // Shuffle the password to ensure randomness
-        password = password.split('').sort(() => 0.5 - Math.random()).join('');
+            password = password.split('').sort(() => 0.5 - Math.random()).join('');
 
-        document.getElementById('signup-password').value = password;
+            document.getElementById('signup-password').value = password;
         }
 
         document.getElementById('signup-form').addEventListener('submit', function (e) {
@@ -303,24 +297,23 @@
                 return;
             }
 
-            // Get reCAPTCHA response
-            //var recaptchaResponse = grecaptcha.getResponse();
-            //if (recaptchaResponse.length === 0) {
-                //Swal.fire({
-                //    icon: 'error',
-                   // title: 'reCAPTCHA Error',
-                   // text: 'Please complete the reCAPTCHA verification.',
-                  //  position: 'top-end',
-                   // toast: true,
-                   // showConfirmButton: false,
-                   // timer: 3000
-               // });
-               // return;
-           // }
+            // Check terms of service
+            const termsCheckbox = document.getElementById('terms-of-service');
+            if (!termsCheckbox.checked) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Terms of Service',
+                    text: 'You must agree to the Terms of Service to create an account.',
+                    position: 'top-end',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                return;
+            }
 
             var formData = new FormData(this);
             formData.append('action', 'register');
-          //  formData.append('g-recaptcha-response', recaptchaResponse);
 
             // Show loading alert
             Swal.fire({
@@ -375,9 +368,31 @@
                 });
             });
         });
+    </script>   
+    <!-- Modify the signup form submission validation in JavaScript -->
+<script>
+document.getElementById('signup-form').addEventListener('submit', function (e) {
+    // ... existing code ...
 
+    // Add terms of service check
+    const termsCheckbox = document.getElementById('terms-of-service');
+    if (!termsCheckbox.checked) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Terms of Service',
+            text: 'You must agree to the Terms of Service to create an account.',
+            position: 'top-end',
+            toast: true,
+            showConfirmButton: false,
+            timer: 3000
+        });
+        e.preventDefault();
+        return;
+    }
 
-        document.getElementById('forgot-password-form').addEventListener('submit', function(e) {
+    // ... rest of existing submission code ...
+});
+document.getElementById('forgot-password-form').addEventListener('submit', function(e) {
             e.preventDefault();
 
             var formData = new FormData(this);
@@ -430,14 +445,7 @@
                 });
             });
         });
-
-       // grecaptcha.ready(function () {
-           // grecaptcha.execute('6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK', { action: 'submit' }).then(function (token) {
-           //     document.getElementById('g-recaptcha-response').value = token;
-           // });
-      //  });
-    </script>
-    
+</script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <?php require_once('inc/footer.php'); ?>
