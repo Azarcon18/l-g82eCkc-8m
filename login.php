@@ -200,10 +200,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
-    <div class="row mb-4">
-        <a href="#" class="btn btn-link float-end" data-toggle="modal" data-target="#forgotPasswordModal">Forgot
+    <center><div class="row mb-4">
+        <a href="#" class="btn-link float-end" data-toggle="modal" data-target="#forgotPasswordModal">Forgot
             Password?</a>
-    </div>
+    </div></center>
 
     <!-- Forgot Password Modal -->
     <div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog"
