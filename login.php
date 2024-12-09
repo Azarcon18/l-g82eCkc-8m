@@ -21,6 +21,8 @@ if (substr($request, -4) == '.php') {
     </div>
 <?php endif; ?>
 
+<script src="https://www.google.com/recaptcha/api.js?render=6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK"></script>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php require_once('inc/header.php'); ?>
@@ -356,6 +358,12 @@ if (substr($request, -4) == '.php') {
                     timer: 3000,
                     timerProgressBar: true
                 });
+            });
+        });
+
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK', { action: 'submit' }).then(function (token) {
+                document.getElementById('g-recaptcha-response').value = token;
             });
         });
     </script>
