@@ -134,63 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <option value="married">Married</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="terms-of-service" name="terms_accepted" required>
-                                <label class="custom-control-label" for="terms-of-service">
-                                    I have read and agree to the <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a>
-                                </label>
-                            </div>
-                        </div>
-                        <!-- Modify the existing signup form in the modal body -->
-
-<!-- Add this Terms of Service Modal -->
-<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="termsModalLabel">Terms of Service</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h6>1. Acceptance of Terms</h6>
-                <p>By creating an account, you agree to these Terms of Service. Please read them carefully.</p>
-
-                <h6>2. User Account</h6>
-                <p>You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.</p>
-
-                <h6>3. User Conduct</h6>
-                <p>You agree not to use the service for any unlawful purposes or to violate any local, state, national, or international laws. Prohibited activities include, but are not limited to:</p>
-                <ul>
-                    <li>Harassment or abuse of other users</li>
-                    <li>Spreading harmful or malicious content</li>
-                    <li>Attempting to gain unauthorized access to system resources</li>
-                </ul>
-
-                <h6>4. Privacy</h6>
-                <p>Your use of the service is also governed by our Privacy Policy. We collect and use personal information as described in that policy.</p>
-
-                <h6>5. Intellectual Property</h6>
-                <p>All content on this platform is protected by intellectual property laws. Users may not reproduce, distribute, or create derivative works without explicit permission.</p>
-
-                <h6>6. Limitation of Liability</h6>
-                <p>We are not liable for any direct, indirect, incidental, special, or consequential damages resulting from your use of the service.</p>
-
-                <h6>7. Modifications to Terms</h6>
-                <p>We reserve the right to modify these terms at any time. Continued use of the service after changes constitutes acceptance of the new terms.</p>
-
-                <h6>8. Termination</h6>
-                <p>We may terminate or suspend your account at our discretion, with or without notice, for conduct that we believe violates these terms or is harmful to other users.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+                        <div class="g-recaptcha mb-3" data-sitekey="6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK"></div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Sign Up</button>
@@ -200,10 +144,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
-    <center><div class="row mb-4">
-        <a href="#" class="btn-link float-end" data-toggle="modal" data-target="#forgotPasswordModal">Forgot
+    <div class="row mb-4">
+        <a href="#" class="btn btn-link float-end" data-toggle="modal" data-target="#forgotPasswordModal">Forgot
             Password?</a>
-    </div></center>
+    </div>
 
     <!-- Forgot Password Modal -->
     <div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog"
@@ -248,33 +192,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         function isStrongPassword(password) {
+            // Define what constitutes a strong password
             const strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
             return strongPasswordPattern.test(password);
         }
 
         function suggestStrongPassword() {
-            const length = 12;
-            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*?&";
-            let password = "";
+        const length = 12;
+        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*?&";
+        let password = "";
 
-            const categories = [
-                "abcdefghijklmnopqrstuvwxyz", 
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 
-                "0123456789",                 
-                "@$!%*?&"                     
-            ];
+        // Ensure the password contains at least one character from each category
+        const categories = [
+            "abcdefghijklmnopqrstuvwxyz", // Lowercase
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ", // Uppercase
+            "0123456789",                 // Numbers
+            "@$!%*?&"                     // Special characters
+        ];
 
-            categories.forEach(category => {
-                password += category.charAt(Math.floor(Math.random() * category.length));
-            });
+        // Add one character from each category to ensure diversity
+        categories.forEach(category => {
+            password += category.charAt(Math.floor(Math.random() * category.length));
+        });
 
-            for (let i = password.length; i < length; ++i) {
-                password += charset.charAt(Math.floor(Math.random() * charset.length));
-            }
+        // Fill the rest of the password length with random characters from the charset
+        for (let i = password.length; i < length; ++i) {
+            password += charset.charAt(Math.floor(Math.random() * charset.length));
+        }
 
-            password = password.split('').sort(() => 0.5 - Math.random()).join('');
+        // Shuffle the password to ensure randomness
+        password = password.split('').sort(() => 0.5 - Math.random()).join('');
 
-            document.getElementById('signup-password').value = password;
+        document.getElementById('signup-password').value = password;
         }
 
         document.getElementById('signup-form').addEventListener('submit', function (e) {
@@ -297,13 +246,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 return;
             }
 
-            // Check terms of service
-            const termsCheckbox = document.getElementById('terms-of-service');
-            if (!termsCheckbox.checked) {
+            // Get reCAPTCHA response
+            var recaptchaResponse = grecaptcha.getResponse();
+            if (recaptchaResponse.length === 0) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Terms of Service',
-                    text: 'You must agree to the Terms of Service to create an account.',
+                    title: 'reCAPTCHA Error',
+                    text: 'Please complete the reCAPTCHA verification.',
                     position: 'top-end',
                     toast: true,
                     showConfirmButton: false,
@@ -314,6 +263,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             var formData = new FormData(this);
             formData.append('action', 'register');
+            formData.append('g-recaptcha-response', recaptchaResponse);
 
             // Show loading alert
             Swal.fire({
@@ -368,31 +318,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 });
             });
         });
-    </script>   
-    <!-- Modify the signup form submission validation in JavaScript -->
-<script>
-document.getElementById('signup-form').addEventListener('submit', function (e) {
-    // ... existing code ...
 
-    // Add terms of service check
-    const termsCheckbox = document.getElementById('terms-of-service');
-    if (!termsCheckbox.checked) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Terms of Service',
-            text: 'You must agree to the Terms of Service to create an account.',
-            position: 'top-end',
-            toast: true,
-            showConfirmButton: false,
-            timer: 3000
-        });
-        e.preventDefault();
-        return;
-    }
 
-    // ... rest of existing submission code ...
-});
-document.getElementById('forgot-password-form').addEventListener('submit', function(e) {
+        document.getElementById('forgot-password-form').addEventListener('submit', function(e) {
             e.preventDefault();
 
             var formData = new FormData(this);
@@ -445,7 +373,13 @@ document.getElementById('forgot-password-form').addEventListener('submit', funct
                 });
             });
         });
-</script>
+
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK', { action: 'submit' }).then(function (token) {
+                document.getElementById('g-recaptcha-response').value = token;
+            });
+        });
+    </script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <?php require_once('inc/footer.php'); ?>
