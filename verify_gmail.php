@@ -93,7 +93,7 @@
                                     popup: 'swal2-popup'
                                 }
                             }).then(() => {
-                                window.location.href = 'http://localhost/immaculateconception/login.php';
+                                window.location.href = 'https://icpmadridejos.com/login.php';
                             });
                         } else {
                             Swal.fire({
