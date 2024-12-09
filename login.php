@@ -315,7 +315,6 @@ if (substr($request, -4) == '.php') {
             if (recaptchaResponse.length === 0) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'reCAPTCHA Error',
                     text: 'Please complete the reCAPTCHA verification.',
                     position: 'top-end',
                     toast: true,
@@ -331,7 +330,6 @@ if (substr($request, -4) == '.php') {
 
             // Show loading alert
             Swal.fire({
-                title: 'Processing...',
                 html: 'Please wait while we create your account',
                 timerProgressBar: true,
                 didOpen: () => {
@@ -369,10 +367,10 @@ if (substr($request, -4) == '.php') {
             .catch(error => {
                 // Close loading alert
                 Swal.close();
-                console.error('Error:', error);
+                console.error('', error);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
+                 
                     text: 'An unexpected error occurred. Please try again.',
                     position: 'top-end',
                     toast: true,
@@ -391,7 +389,7 @@ if (substr($request, -4) == '.php') {
 
             // Show loading alert
             Swal.fire({
-                title: 'Processing...',
+              
                 html: 'Please wait while we process your request',
                 timerProgressBar: true,
                 didOpen: () => {
@@ -412,7 +410,7 @@ if (substr($request, -4) == '.php') {
                 Swal.close();
                 Swal.fire({
                     icon: 'success',
-                    title: 'Email Sent',
+                
                     text: data,
                     position: 'top-end',
                     toast: true,
@@ -424,10 +422,10 @@ if (substr($request, -4) == '.php') {
             .catch(error => {
                 // Close loading alert
                 Swal.close();
-                console.error('Error:', error);
+                console.error('', error);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
+            
                     text: 'An unexpected error occurred. Please try again.',
                     position: 'top-end',
                     toast: true,
