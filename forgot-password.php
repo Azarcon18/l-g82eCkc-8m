@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->addAddress($email);
 
             // Content
-            $resetLink = "http://localhost/immaculateconception/reset-password.php?token=$token";
+            $resetLink = "https://icpmadridejos.com/reset-password.php?token=$token";
             $mail->isHTML(true);
             $mail->Subject = 'Password Reset Request';
             $mail->Body    = "Click the following link to reset your password: <a href='$resetLink'>$resetLink</a>";
