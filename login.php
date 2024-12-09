@@ -88,10 +88,20 @@ if (substr($request, -4) == '.php') {
                 </div>
                 <div class="modal-body">
                     <form id="signup-form">
-                        <div class="form-group">
-                            <label for="name" class="control-label">Full Name</label>
-                            <input type="text" class="form-control" name="name" required>
-                        </div>
+                    <div class="form-group">
+    <label for="name" class="control-label">Full Name</label>
+    <input 
+        type="text" 
+        class="form-control" 
+        id="name" 
+        name="name" 
+        pattern="^[A-Za-z\s'-]+$" 
+        title="Please enter only letters, spaces, hyphens, and apostrophes" 
+        required 
+        oninput="sanitizeName(this)"
+    >
+</div>
+
                         <div class="form-group">
                             <label for="user_name" class="control-label">Username</label>
                             <input type="text" class="form-control" name="user_name" required>
@@ -367,6 +377,30 @@ if (substr($request, -4) == '.php') {
             });
         });
     </script>
+<script>
+function sanitizeName(input) {
+    // Remove any characters that are not letters, spaces, hyphens, or apostrophes
+    input.value = input.value.replace(/[^A-Za-z\s'-]/g, '');
+    
+    // Limit length to prevent extremely long inputs
+    input.value = input.value.substring(0, 50);
+    
+    // Ensure first character is uppercase
+    input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
+}
 
+// Server-side validation example (pseudocode)
+function validateNameServer(name) {
+    // Regex to match only letters, spaces, hyphens, and apostrophes
+    const nameRegex = /^[A-Za-z\s'-]+$/;
+    
+    // Check if name matches the regex and is within length limits
+    if (nameRegex.test(name) && name.length >= 2 && name.length <= 50) {
+        return true; // Valid name
+    }
+    
+    return false; // Invalid name
+}
+</script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <?php require_once('inc/footer.php'); ?>
