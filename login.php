@@ -160,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="forgot-password-form" action="classes/reset_password.php" method="POST">
+                <form id="forgot-password-form">
                         <div class="form-group">
                             <label for="reset-email" class="control-label">Enter your email address</label>
                             <input type="email" class="form-control" name="email" id="reset-email" required>
