@@ -1,191 +1,330 @@
-<?php
-session_start(); // Start session for basic authentication
-// Note: This is a basic implementation and MUST be enhanced for real-world use
+<?php require_once('config.php');
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $recaptchaSecret = '6LfCPpMqAAAAAE4pB5LZP4P_TUqHsKnnt3J465OP'; // Replace with your secret key
+    $recaptchaResponse = $_POST['g-recaptcha-response']; // User's response token
 
-// Database connection parameters
-$servername = "localhost";
-$username = "u510162695_church_db";
-$password = "1Church_db";
-$dbname = "u510162695_church_db";
+    // Verify reCAPTCHA with Google
+    $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$recaptchaSecret}&response={$recaptchaResponse}");
+    $response = json_decode($verify);
 
-// Basic authentication (IMPORTANT: REPLACE WITH PROPER AUTHENTICATION)
-if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
-    // Simplified login (MUST be replaced with secure login mechanism)
-    $_SESSION['authenticated'] = false;
-}
-
-// Handle delete action
-if (isset($_GET['action']) && $_GET['action'] == 'delete' && 
-    isset($_GET['table']) && isset($_GET['id']) && 
-    $_SESSION['authenticated'] === true) {
-    
-    $table = $_GET['table'];
-    $id = $_GET['id'];
-    
-    // Validate inputs (CRITICAL SECURITY STEP)
-    $table = $conn->real_escape_string($table);
-    $id = $conn->real_escape_string($id);
-    
-    // Attempt to get primary key column name
-    $primary_key_query = "SHOW KEYS FROM `$table` WHERE Key_name = 'PRIMARY'";
-    $primary_key_result = $conn->query($primary_key_query);
-    
-    if ($primary_key_result->num_rows > 0) {
-        $primary_key_row = $primary_key_result->fetch_assoc();
-        $primary_key_column = $primary_key_row['Column_name'];
-        
-        // Prepare and execute delete query
-        $delete_query = "DELETE FROM `$table` WHERE `$primary_key_column` = '$id'";
-        if ($conn->query($delete_query) === TRUE) {
-            echo "<script>alert('Row deleted successfully');</script>";
-        } else {
-            echo "<script>alert('Error deleting row: " . htmlspecialchars($conn->error) . "');</script>";
-        }
+    // Check if reCAPTCHA validation is successful
+    if (!$response->success || $response->score < 0.5) { // Adjust the score threshold as needed
+        die('reCAPTCHA verification failed. Please try again.');
     }
+
+    // Proceed with login/signup logic here
 }
+?>
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+<?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger">
+        <?php
+        echo $_SESSION['error'];
+        unset($_SESSION['error']);
+        ?>
+    </div>
+<?php endif; ?>
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . htmlspecialchars($conn->connect_error));
-}
+<script src="https://www.google.com/recaptcha/api.js?render=6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK"></script>
 
-// HTML header
-echo '<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Database Tables</title>
+<?php require_once('inc/header.php'); ?>
+
+<body class="light-mode">
+    <?php if ($_settings->chk_flashdata('success')): ?>
+        <script>
+            alert_toast("<?php echo $_settings->flashdata('success') ?>", 'success')
+        </script>
+    <?php endif; ?>
+    <?php require_once('inc/topBarNav.php'); ?>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
-        th, td { 
-            border: 1px solid #ddd; 
-            padding: 8px; 
-            text-align: left; 
-        }
-        th { 
-            background-color: #f2f2f2; 
-            font-weight: bold; 
-        }
-        h2 { color: #333; }
-        .delete-btn {
-            background-color: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer;
+        #uni_modal .modal-content>.modal-footer,
+        #uni_modal .modal-content>.modal-header {
+            display: none;
         }
     </style>
-</head>
-<body>';
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script> <!-- Correct reCAPTCHA script -->
+    <div class="container-fluid mb-5 mt-2">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-4">
+                <h3 class="text-center">Login</h3>
+                <hr>
+                <form id="login-form" action="classes/registereduser_login.php" method="post">
+                    <div class="form-group">
+                        <label for="email" class="control-label">Email</label>
+                        <input type="email" class="form-control form" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="control-label">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control form" id="password" name="password" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button"
+                                    onclick="togglePasswordVisibility('password', this)">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+                    <div class="row mb-4 mt-3">
+                        <button type="submit" class="btn btn-primary float-end" name="login_btn">Login</button>
+                    </div>
+                    <div class="row mb-4">
+                        <button type="button" class="btn btn-secondary float-end" data-toggle="modal"
+                            data-target="#signupModal">Create Account</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-// Authentication check
-if ($_SESSION['authenticated'] !== true) {
-    echo '<form method="post" action="">
-            <h2>Login Required</h2>
-            <input type="password" name="password" placeholder="Enter Password">
-            <input type="submit" value="Login">
-          </form>';
-    
-    // Simple login handling (MUST BE REPLACED WITH SECURE METHOD)
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $entered_password = $_POST['password'];
-        // REPLACE WITH SECURE PASSWORD CHECK
-        if ($entered_password === '1Church_db') {
-            $_SESSION['authenticated'] = true;
-            echo "<script>location.reload();</script>";
-        } else {
-            echo "<script>alert('Incorrect Password');</script>";
-        }
-    }
-    
-    $conn->close();
-    echo '</body></html>';
-    exit();
-}
+    <!-- Signup Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupModalLabel">Create Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="signup-form">
+                        <div class="form-group">
+                            <label for="name" class="control-label">Full Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_name" class="control-label">Username</label>
+                            <input type="text" class="form-control" name="user_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="control-label">Email</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="control-label">Password</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control form" id="signup-password" name="password"
+                                    required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        onclick="togglePasswordVisibility('signup-password', this)">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <small><a href="#" onclick="suggestStrongPassword()">Suggest Strong Password</a></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_no" class="control-label">Phone Number</label>
+                            <input type="text" class="form-control" name="phone_no" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address" class="control-label">Address</label>
+                            <textarea class="form-control" name="address" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="status" class="control-label">Marital Status</label>
+                            <select class="form-control" name="status" required>
+                                <option value="single">Single</option>
+                                <option value="married">Married</option>
+                            </select>
+                        </div>
+                        <div class="g-recaptcha mb-3" data-sitekey="6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <a href="#" class="btn btn-link float-end" data-toggle="modal" data-target="#forgotPasswordModal">Forgot
+            Password?</a>
+    </div>
 
-// Get list of all tables
-$tables_query = "SHOW TABLES";
-$tables_result = $conn->query($tables_query);
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog"
+        aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">Reset Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="forgot-password-form" action="classes/reset_password.php" method="POST">
+                        <div class="form-group">
+                            <label for="reset-email" class="control-label">Enter your email address</label>
+                            <input type="email" class="form-control" name="email" id="reset-email" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Reset Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-if ($tables_result->num_rows > 0) {
-    while ($table = $tables_result->fetch_array()) {
-        $table_name = htmlspecialchars($table[0]);
-        echo "<h2>Table: {$table_name}</h2>";
-        
-        // Retrieve and display data from each table
-        $data_query = "SELECT * FROM `" . $table[0] . "`";
-        $data_result = $conn->query($data_query);
-        
-        if ($data_result->num_rows > 0) {
-            echo "<table>";
-            
-            // Print column headers
-            echo "<tr>";
-            $fields = $data_result->fetch_fields();
-            foreach ($fields as $field) {
-                echo "<th>" . htmlspecialchars($field->name) . "</th>";
+    <script>
+        function togglePasswordVisibility(fieldId, toggleButton) {
+            const passwordField = document.getElementById(fieldId);
+            const icon = toggleButton.querySelector('i');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
             }
-            echo "<th>Actions</th>";
-            echo "</tr>";
-            
-            // Attempt to get primary key column
-            $primary_key_query = "SHOW KEYS FROM `" . $table[0] . "` WHERE Key_name = 'PRIMARY'";
-            $primary_key_result = $conn->query($primary_key_query);
-            $primary_key_column = $primary_key_result->num_rows > 0 
-                ? $primary_key_result->fetch_assoc()['Column_name'] 
-                : null;
-            
-            // Print data rows
-            while ($row = $data_result->fetch_assoc()) {
-                echo "<tr>";
-                $row_id = $primary_key_column ? $row[$primary_key_column] : null;
-                
-                foreach ($row as $value) {
-                    // Escape all output to prevent XSS
-                    echo "<td>" . htmlspecialchars($value) . "</td>";
-                }
-                
-                // Add delete action column
-                echo "<td>";
-                if ($row_id !== null) {
-                    echo "<a href='?action=delete&table=" . urlencode($table[0]) . 
-                         "&id=" . urlencode($row_id) . 
-                         "' class='delete-btn' onclick='return confirm(\"Are you sure you want to delete this row?\");'>Delete</a>";
+        }
+
+        function isStrongPassword(password) {
+            // Define what constitutes a strong password
+            const strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            return strongPasswordPattern.test(password);
+        }
+
+        function suggestStrongPassword() {
+        const length = 12;
+        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*?&";
+        let password = "";
+
+        // Ensure the password contains at least one character from each category
+        const categories = [
+            "abcdefghijklmnopqrstuvwxyz", // Lowercase
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ", // Uppercase
+            "0123456789",                 // Numbers
+            "@$!%*?&"                     // Special characters
+        ];
+
+        // Add one character from each category to ensure diversity
+        categories.forEach(category => {
+            password += category.charAt(Math.floor(Math.random() * category.length));
+        });
+
+        // Fill the rest of the password length with random characters from the charset
+        for (let i = password.length; i < length; ++i) {
+            password += charset.charAt(Math.floor(Math.random() * charset.length));
+        }
+
+        // Shuffle the password to ensure randomness
+        password = password.split('').sort(() => 0.5 - Math.random()).join('');
+
+        document.getElementById('signup-password').value = password;
+        }
+
+        document.getElementById('signup-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const passwordField = document.getElementById('signup-password');
+            const password = passwordField.value;
+
+            // Check if the password is strong
+            if (!isStrongPassword(password)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Strong Password Required',
+                    text: 'Please use a stronger password.',
+                    position: 'top-end',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                return;
+            }
+
+            // Get reCAPTCHA response
+            var recaptchaResponse = grecaptcha.getResponse();
+            if (recaptchaResponse.length === 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'reCAPTCHA Error',
+                    text: 'Please complete the reCAPTCHA verification.',
+                    position: 'top-end',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                return;
+            }
+
+            var formData = new FormData(this);
+            formData.append('action', 'register');
+            formData.append('g-recaptcha-response', recaptchaResponse);
+
+            // Show loading alert
+            Swal.fire({
+                title: 'Processing...',
+                html: 'Please wait while we create your account',
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                position: 'top-end',
+                toast: true,
+                showConfirmButton: false
+            });
+
+            fetch('classes/register.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Close loading alert
+                Swal.close();
+                if (data.success) {
+                    // Redirect to verify_gmail.php with email as a query parameter
+                    const email = formData.get('email');
+                    window.location.href = `verify_gmail.php?email=${encodeURIComponent(email)}`;
                 } else {
-                    echo "N/A";
+                    Swal.fire({
+                        icon: 'error',
+                        text: data.message,
+                        position: 'top-end',
+                        toast: true,
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                    });
                 }
-                echo "</td>";
-                
-                echo "</tr>";
-            }
-            
-            echo "</table>";
-        } else {
-            echo "<p>No data in this table.</p>";
-        }
-    }
-} else {
-    echo "<p>No tables found in the database.</p>";
-}
+            })
+            .catch(error => {
+                // Close loading alert
+                Swal.close();
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An unexpected error occurred. Please try again.',
+                    position: 'top-end',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            });
+        });
 
-// Logout link
-echo '<br><a href="?action=logout">Logout</a>';
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK', { action: 'submit' }).then(function (token) {
+                document.getElementById('g-recaptcha-response').value = token;
+            });
+        });
+    </script>
 
-// Logout handling
-if (isset($_GET['action']) && $_GET['action'] == 'logout') {
-    session_destroy();
-    echo "<script>location.reload();</script>";
-}
-
-// HTML footer
-echo '</body></html>';
-
-// Close connection
-$conn->close();
-?>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <?php require_once('inc/footer.php'); ?>
