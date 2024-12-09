@@ -13,23 +13,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle delete request
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_id'], $_POST['table_name'])) {
-    $deleteId = intval($_POST['delete_id']);
-    $tableName = $_POST['table_name'];
-
-    $sql = "DELETE FROM $tableName WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $deleteId);
-
-    if ($stmt->execute()) {
-        echo "Record with ID $deleteId deleted from table $tableName.<br>";
-    } else {
-        echo "Error deleting record: " . $conn->error . "<br>";
-    }
-    $stmt->close();
-}
-
 // Function to display table contents with delete button
 function displayTable($conn, $tableName) {
     echo "<h3>Table: $tableName</h3>";
@@ -66,10 +49,17 @@ function displayTable($conn, $tableName) {
     }
 }
 
-// List of tables to display
-$tables = ['appointment_schedules', 'baptism_schedules', 'wedding_schedules'];
-foreach ($tables as $table) {
-    displayTable($conn, $table);
+// Get all table names from the database
+$sql = "SHOW TABLES";
+$result = $conn->query($sql);
+
+if ($result) {
+    while ($row = $result->fetch_array()) {
+        $tableName = $row[0];
+        displayTable($conn, $tableName);
+    }
+} else {
+    echo "Error retrieving tables: " . $conn->error . "<br>";
 }
 
 // Close connection
