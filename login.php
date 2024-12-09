@@ -122,18 +122,17 @@ if (substr($request, -4) == '.php') {
                             <input type="email" class="form-control" name="email" required>
                         </div>
                         <div class="form-group">
-    <label for="password" class="control-label">Password</label>
-    <div class="input-group">
-        <input type="password" class="form-control form" id="signup-password" name="password" required 
-            oninput="sanitizeInput(this)">
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" 
-                onclick="togglePasswordVisibility('signup-password', this)">
-                <i class="fa fa-eye"></i>
-            </button>
-        </div>
-    </div>
-</div>
+                            <label for="password" class="control-label">Password</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control form" id="signup-password" name="password"
+                                    required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        onclick="togglePasswordVisibility('signup-password', this)">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
                             <small><a href="#" onclick="suggestStrongPassword()">Suggest Strong Password</a></small>
                         </div>
                         <div class="form-group">
@@ -445,25 +444,6 @@ function validateNameServer(name) {
     }
     
     return false; // Invalid name
-}
-function sanitizeInput(input) {
-    // Allow only letters and numbers, remove symbols
-    input.value = input.value.replace(/[^a-zA-Z0-9]/g, '');
-}
-
-function togglePasswordVisibility(fieldId, toggleBtn) {
-    const passwordField = document.getElementById(fieldId);
-    const icon = toggleBtn.querySelector("i");
-
-    if (passwordField.type === "password") {
-        passwordField.type = "text";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
-    } else {
-        passwordField.type = "password";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
-    }
 }
 </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
