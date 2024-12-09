@@ -374,7 +374,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 document.getElementById('signup-form').addEventListener('submit', function (e) {
     // ... existing code ...
 
-    // Add terms of serv ice check
+    // Add terms of service check
     const termsCheckbox = document.getElementById('terms-of-service');
     if (!termsCheckbox.checked) {
         Swal.fire({
@@ -392,6 +392,59 @@ document.getElementById('signup-form').addEventListener('submit', function (e) {
 
     // ... rest of existing submission code ...
 });
+document.getElementById('forgot-password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            // Show loading alert
+            Swal.fire({
+                title: 'Processing...',
+                html: 'Please wait while we process your request',
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                position: 'top-end',
+                toast: true,
+                showConfirmButton: false
+            });
+
+            fetch('forgot-password.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Close loading alert
+                Swal.close();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Email Sent',
+                    text: data,
+                    position: 'top-end',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            })
+            .catch(error => {
+                // Close loading alert
+                Swal.close();
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An unexpected error occurred. Please try again.',
+                    position: 'top-end',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            });
+        });
 </script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
