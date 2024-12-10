@@ -86,37 +86,16 @@ if (substr($request, -4) == '.php') {
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                        <div class="modal-body">
+                <div class="modal-body">
                     <form id="signup-form">
-                    <div class="form-group">
-    <label for="name" class="control-label">Full Name</label>
-    <input 
-        type="text" 
-        class="form-control" 
-        id="name" 
-        name="name" 
-        pattern="^[A-Za-z\s'-]+$" 
-        title="Please enter only letters, spaces, hyphens, and apostrophes" 
-        required 
-        oninput="sanitizeName(this)"
-    >
-</div>
-
-                        <div class="modal-body">
-                    <form id="signup-form">
-                    <div class="form-group">
-    <label for="name" class="control-label">Username</label>
-    <input 
-        type="text" 
-        class="form-control" 
-        id="name" 
-        name="name" 
-        pattern="^[A-Za-z\s'-]+$" 
-        title="Please enter only letters, spaces, hyphens, and apostrophes" 
-        required 
-        oninput="sanitizeName(this)"
-    >
-</div>
+                        <div class="form-group">
+                            <label for="name" class="control-label">Full Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_name" class="control-label">Username</label>
+                            <input type="text" class="form-control" name="user_name" required>
+                        </div>
                         <div class="form-group">
                             <label for="email" class="control-label">Email</label>
                             <input type="email" class="form-control" name="email" required>
@@ -179,41 +158,8 @@ if (substr($request, -4) == '.php') {
                     </button>
                 </div>
                 <div class="modal-body">
-                <h6>1. Acceptance of Terms</h6>
-                <p>By creating an account, you agree to these Terms of Service. Please read them carefully.</p>
-
-                <h6>2. User Account</h6>
-                <p>You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.</p>
-
-                <h6>3. User Conduct</h6>
-                <p>You agree not to use the service for any unlawful purposes or to violate any local, state, national, or international laws. Prohibited activities include, but are not limited to:</p>
-                <ul>
-                    <li>Harassment or abuse of other users</li>
-                    <li>Spreading harmful or malicious content</li>
-                    <li>Attempting to gain unauthorized access to system resources</li>
-                </ul>
-
-                <h6>4. Privacy</h6>
-                <p>Your use of the service is also governed by our Privacy Policy. We collect and use personal information as described in that policy.</p>
-
-                <h6>5. Intellectual Property</h6>
-                <p>All content on this platform is protected by intellectual property laws. Users may not reproduce, distribute, or create derivative works without explicit permission.</p>
-
-                <h6>6. Limitation of Liability</h6>
-                <p>We are not liable for any direct, indirect, incidental, special, or consequential damages resulting from your use of the service.</p>
-
-                <h6>7. Modifications to Terms</h6>
-                <p>We reserve the right to modify these terms at any time. Continued use of the service after changes constitutes acceptance of the new terms.</p>
-
-                <h6>8. Termination</h6>
-                <p>We may terminate or suspend your account at our discretion, with or without notice, for conduct that we believe violates these terms or is harmful to other users.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+                    <!-- Terms of Service content -->
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
@@ -421,30 +367,6 @@ if (substr($request, -4) == '.php') {
             });
         });
     </script>
-<script>
-function sanitizeName(input) {
-    // Remove any characters that are not letters, spaces, hyphens, or apostrophes
-    input.value = input.value.replace(/[^A-Za-z\s'-]/g, '');
-    
-    // Limit length to prevent extremely long inputs
-    input.value = input.value.substring(0, 50);
-    
-    // Ensure first character is uppercase
-    input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
-}
 
-// Server-side validation example (pseudocode)
-function validateNameServer(name) {
-    // Regex to match only letters, spaces, hyphens, and apostrophes
-    const nameRegex = /^[A-Za-z\s'-]+$/;
-    
-    // Check if name matches the regex and is within length limits
-    if (nameRegex.test(name) && name.length >= 2 && name.length <= 50) {
-        return true; // Valid name
-    }
-    
-    return false; // Invalid name
-}
-</script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <?php require_once('inc/footer.php'); ?>
