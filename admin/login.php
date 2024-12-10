@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 <?php require_once('../config.php'); ?>
+<?php require_once('inc/header.php'); ?>
 
 <style>
   /* Custom Styles for Login */
@@ -79,9 +80,6 @@
   </div>
 
   <!-- External Libraries -->
-  <script src="plugins/jquery/jquery.min.js"></script>
-  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="dist/js/adminlte.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
