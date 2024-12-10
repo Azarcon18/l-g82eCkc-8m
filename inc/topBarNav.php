@@ -6,7 +6,6 @@
     <title>Responsive Navbar with Donation Form</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Include SweetAlert -->
     <style>
         .scanning-progress {
             margin-top: 10px;
@@ -15,20 +14,26 @@
             border-radius: 4px;
             font-size: 14px;
         }
+
         .progress {
             height: 4px;
             margin-top: 5px;
         }
+
         .spinner-wrapper {
             display: inline-block;
             margin-right: 8px;
         }
+
+        /* Ensures the QR code is centered within the modal */
         #qrCode {
             width: 250px;
             height: 250px;
             margin: 0 auto;
             text-align: center;
         }
+
+        /* Modal Customizations */
         .modal-content {
             border-radius: 10px;
         }
@@ -39,23 +44,6 @@
 <!-- Include session management -->
 <?php 
 include 'session.php'; 
-session_start(); // Start the session to access session variables
-
-if (isset($_SESSION['logout_success'])) {
-    echo "<script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Logout Successful',
-            text: 'You have been logged out.',
-            position: 'center',
-            toast: true,
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true
-        });
-    </script>";
-    unset($_SESSION['logout_success']); // Clear the session variable
-}
 ?>
 
 <!-- Navbar -->
