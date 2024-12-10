@@ -7,36 +7,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     // Use prepared statement for secure authentication
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
-    $stmt->bind_param("s", $username);
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
+    $stmt->bind_param("ss", $username, md5($password));
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // User exists, fetch user data
-        $user = $result->fetch_assoc();
-        
-        // Verify password using password_verify (assumes password is hashed using password_hash)
-        if (password_verify($password, $user['password'])) {
-            // Successful login, set session variables
-            $_SESSION['user'] = $username;  // You can store the user ID or any other data in the session
-            header('Location: dashboard.php');  // Redirect to dashboard
-            exit();
-        } else {
-            // Failed login - incorrect password
-            echo '<script>
-                    alert("Invalid username or password");
-                    window.location.href = "login.php";
-                  </script>';
-            exit();
-        }
-    } else {
-        // Failed login - username not found
+        // Successful login
+        $_SESSION['user'] = $username;
+        // Remove start_loader() call to stop loading
         echo '<script>
-                alert("Invalid username or password");
-                window.location.href = "login.php";
-              </script>';
+            window.location.href = "dashboard.php";
+        </script>';
+        exit();
+    } else {
+        // Failed login
+        echo '<script>
+            alert("Invalid username or password");
+            window.location.href = "login.php";
+        </script>';
         exit();
     }
 }
 ?>
+
