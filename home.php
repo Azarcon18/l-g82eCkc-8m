@@ -117,8 +117,10 @@ if (isset($_SESSION['login_success'])) {
     unset($_SESSION['login_success']); // Clear the session variable
 }
 
-if (isset($_SESSION['logout_success'])) {
-    echo "<script>
+?>
+
+<?php if (isset($_SESSION['logout_success'])): ?>
+    <script>
         Swal.fire({
             icon: 'success',
             title: 'Logout Successful',
@@ -129,11 +131,9 @@ if (isset($_SESSION['logout_success'])) {
             timer: 3000,
             timerProgressBar: true
         });
-    </script>";
-    unset($_SESSION['logout_success']); // Clear the session variable
-}
-?>
-
+    </script>
+    <?php unset($_SESSION['logout_success']); // Clear the session variable ?>
+<?php endif; ?>
 <!-- Header-->
 <header class="bg-dark py-5 d-flex align-items-center" id="main-header">
     <div class="container px-4 px-lg-5 my-5 w-100">
