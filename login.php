@@ -101,19 +101,93 @@
                                 <input type="email" class="form-control" name="email" required>
                             </div>
                             <div class="form-group">
-                                <label for="password" class="control-label">Password</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control form" id="signup-password" name="password"
-                                        required>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button"
-                                            onclick="togglePasswordVisibility('signup-password', this)">
-                                            <i class="fa fa-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <small><a href="#" onclick="suggestStrongPassword()">Suggest Strong Password</a></small>
-                            </div>
+    <label for="password" class="control-label">Password</label>
+    <div class="input-group">
+        <input type="password" class="form-control form" id="signup-password" name="password" required>
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('signup-password', this)">
+                <i class="fa fa-eye"></i>
+            </button>
+        </div>
+    </div>
+    <small><a href="#" onclick="suggestStrongPassword()">Suggest Strong Password</a></small>
+
+    <!-- Password Strength Bar -->
+    <div class="mt-2">
+        <progress id="password-strength-bar" value="0" max="100" style="width: 100%; height: 10px;"></progress>
+        <small id="password-strength-text"></small>
+    </div>
+</div>
+
+<script>
+    function togglePasswordVisibility(id, button) {
+        const passwordField = document.getElementById(id);
+        const icon = button.querySelector('i');
+        
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
+    function suggestStrongPassword() {
+        // Function to suggest a strong password (basic example)
+        const passwordField = document.getElementById('signup-password');
+        passwordField.value = 'StrongPassword123';
+        updatePasswordStrength();
+    }
+
+    function updatePasswordStrength() {
+        const password = document.getElementById('signup-password').value;
+        const strengthBar = document.getElementById('password-strength-bar');
+        const strengthText = document.getElementById('password-strength-text');
+        let strength = 0;
+        
+        // Check for symbols
+        if (/[^A-Za-z0-9]/.test(password)) {
+            strengthText.textContent = 'Password cannot contain symbols!';
+            strengthBar.value = 0;
+            return;
+        }
+
+        // Length check
+        if (password.length >= 8) strength += 25;
+
+        // Uppercase letter check
+        if (/[A-Z]/.test(password)) strength += 25;
+
+        // Number check
+        if (/[0-9]/.test(password)) strength += 25;
+
+        // Mixed case (uppercase + lowercase)
+        if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 25;
+
+        // Update the progress bar and text
+        strengthBar.value = strength;
+        if (strength <= 25) {
+            strengthText.textContent = 'Weak Password';
+            strengthText.style.color = 'red';
+        } else if (strength <= 50) {
+            strengthText.textContent = 'Fair Password';
+            strengthText.style.color = 'orange';
+        } else if (strength <= 75) {
+            strengthText.textContent = 'Good Password';
+            strengthText.style.color = 'yellowgreen';
+        } else {
+            strengthText.textContent = 'Strong Password';
+            strengthText.style.color = 'green';
+        }
+    }
+
+    // Add event listener to update strength as user types
+    document.getElementById('signup-password').addEventListener('input', updatePasswordStrength);
+</script>
+
                             <div class="form-group">
                                 <label for="phone_no" class="control-label">Phone Number</label>
                                 <input type="text" class="form-control" name="phone_no" required oninput="validatePhoneNumber(this)">
