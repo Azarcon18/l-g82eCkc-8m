@@ -40,11 +40,13 @@ if($qry->num_rows > 0){
     .recent-blog-img:hover {
         transform: scale(1.1);
     }
+
+
     .truncate-1 {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+    overflow: hidden;
+    word-wrap: break-word; /* Allows long words to break and wrap to the next line */
+    white-space: normal; /* Allows the text to wrap normally */
+}
 
     /* Media Query for Small Screens */
     @media (max-width: 768px) {
@@ -83,6 +85,11 @@ if($qry->num_rows > 0){
         .truncate-1 {
             font-size: 0.9rem; /* Reduce font size for mobile view */
         }
+        .truncate-1 {
+    overflow: hidden;
+    word-wrap: break-word; /* Allows long words to break and wrap to the next line */
+    white-space: normal; /* Allows the text to wrap normally */
+}
     }
 
     /* For very small devices */
@@ -93,6 +100,11 @@ if($qry->num_rows > 0){
         #main-header p {
             font-size: 0.9rem; /* Reduce the font size of the verse attribution */
         }
+        .truncate-1 {
+    overflow: hidden;
+    word-wrap: break-word; /* Allows long words to break and wrap to the next line */
+    white-space: normal; /* Allows the text to wrap normally */
+}
     }
 </style>
 
