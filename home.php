@@ -1,39 +1,13 @@
-<?php
-session_start(); // Start the session
-
-// Check if the refresh counter is set in the session
-if (!isset($_SESSION['refresh_count'])) {
-    $_SESSION['refresh_count'] = 0; // Initialize the counter if not set
-}
-
-// Increment the refresh counter
-$_SESSION['refresh_count']++;
-
-// Check if the page has been refreshed a second time
-if ($_SESSION['refresh_count'] > 2) {
-    // Destroy the session
-    session_unset();
-    session_destroy();
-
-    // Redirect to login.php
-    header("Location: login.php");
-    exit();
-}
-
+<?php 
 $qry = $conn->query("SELECT * FROM `daily_verses` where `display_date` = '".date('Y-m-d')."' ");
-if ($qry->num_rows > 0) {
-    foreach ($qry->fetch_array() as $k => $v) {
-        if (!is_numeric($k))
+if($qry->num_rows > 0){
+    foreach($qry->fetch_array() as $k => $v){
+        if(!is_numeric($k))
             $dv[$k] = $v;
     }
 }
 ?>
-  <script>
-        // Clear local storage on page load
-        window.onload = function() {
-            localStorage.removeItem("user");
-        };
-    </script>
+
 <style>
     #main-header:before {
         background-image: url("<?php echo validate_image((isset($dv['image_path']) && !empty($dv['image_path'])) ? $dv['image_path'] : $_settings->info('cover')) ?>");
