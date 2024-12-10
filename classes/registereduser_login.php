@@ -46,9 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['name'] = $user['name'];
                 $_SESSION['email'] = $user['email'];
 
-                // Set a session variable to indicate successful login
-                $_SESSION['login_success'] = true;
-
                 $stmt->close();
                 $conn->close();
 
