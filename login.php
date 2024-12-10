@@ -142,17 +142,35 @@
         </label>
     </div>
 </div>
-<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="termsModalLabel">Terms of Service</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Your terms of service content goes here. You can provide a detailed description of your terms, conditions, and privacy policies.</p>
+<div class="modal-body">
+                <h6>1. Acceptance of Terms</h6>
+                <p>By creating an account, you agree to these Terms of Service. Please read them carefully.</p>
+
+                <h6>2. User Account</h6>
+                <p>You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.</p>
+
+                <h6>3. User Conduct</h6>
+                <p>You agree not to use the service for any unlawful purposes or to violate any local, state, national, or international laws. Prohibited activities include, but are not limited to:</p>
+                <ul>
+                    <li>Harassment or abuse of other users</li>
+                    <li>Spreading harmful or malicious content</li>
+                    <li>Attempting to gain unauthorized access to system resources</li>
+                </ul>
+
+                <h6>4. Privacy</h6>
+                <p>Your use of the service is also governed by our Privacy Policy. We collect and use personal information as described in that policy.</p>
+
+                <h6>5. Intellectual Property</h6>
+                <p>All content on this platform is protected by intellectual property laws. Users may not reproduce, distribute, or create derivative works without explicit permission.</p>
+
+                <h6>6. Limitation of Liability</h6>
+                <p>We are not liable for any direct, indirect, incidental, special, or consequential damages resulting from your use of the service.</p>
+
+                <h6>7. Modifications to Terms</h6>
+                <p>We reserve the right to modify these terms at any time. Continued use of the service after changes constitutes acceptance of the new terms.</p>
+
+                <h6>8. Termination</h6>
+                <p>We may terminate or suspend your account at our discretion, with or without notice, for conduct that we believe violates these terms or is harmful to other users.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
