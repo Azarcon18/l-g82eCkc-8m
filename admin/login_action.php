@@ -7,23 +7,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     // Use prepared statement for secure authentication
-    $stmt = $conn->prepare("SELECT id FROM users WHERE username = ? AND password = ?");
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
     $stmt->bind_param("ss", $username, md5($password));
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         // Successful login
-        $user = $result->fetch_assoc();
-        $userId = $user['id'];
-        $_SESSION['user_id'] = $userId;
-
-        // Store session ID in the database
-        $sessionId = session_id();
-        $stmt = $conn->prepare("INSERT INTO user_sessions (user_id, session_id) VALUES (?, ?)");
-        $stmt->bind_param("is", $userId, $sessionId);
-        $stmt->execute();
-
+        $_SESSION['user'] = $username;
+        // Remove start_loader() call to stop loading
         echo '<script>
             window.location.href = "dashboard.php";
         </script>';
@@ -38,3 +30,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
