@@ -80,11 +80,11 @@ include 'session.php';
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" href="<?php echo base_url ?>?p=profile">Profile</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">Logout</a></li>
                         </ul>
                     </div>
                 <?php else: ?>
-                    <li><a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">Logout</a></li>
+                    <a href="login.php" class="btn btn-primary btn-sm">Login</a>
                     <a href="./admin/" class="btn btn-primary btn-sm ms-3">Admin Login</a>
                 <?php endif; ?>
                 <button id="donation" class="btn btn-success btn-sm ms-3">Donate</button>
