@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 <?php require_once('../config.php'); ?>
-<?php require_once('inc/header.php'); ?>
 
 <style>
   /* Custom Styles for Login */
