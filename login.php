@@ -93,50 +93,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="modal-body">
                     <form id="signup-form">
-                    <div class="form-group">
-    <label for="name" class="control-label">Full Name</label>
-    <input 
-        type="text" 
-        class="form-control" 
-        id="name" 
-        name="name" 
-        pattern="^[A-Za-z\s'-]+$" 
-        title="Please enter only letters, spaces, hyphens, and apostrophes" 
-        required 
-        oninput="sanitizeName(this)"
-    >
-</div>
-<div class="form-group">
-    <label for="name" class="control-label">User name</label>
-    <input 
-        type="text" 
-        class="form-control" 
-        id="name" 
-        name="name" 
-        pattern="^[A-Za-z\s'-]+$" 
-        title="Please enter only letters, spaces, hyphens, and apostrophes" 
-        required 
-        oninput="sanitizeName(this)"
-    >
-</div>
+                        <div class="form-group">
+                            <label for="name" class="control-label">Full Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_name" class="control-label">Username</label>
+                            <input type="text" class="form-control" name="user_name" required>
+                        </div>
                         <div class="form-group">
                             <label for="email" class="control-label">Email</label>
                             <input type="email" class="form-control" name="email" required>
                         </div>
                         <div class="form-group">
-    <label for="password" class="control-label">Password</label>
-    <div class="input-group">
-        <input type="password" class="form-control form" id="signup-password" name="password" required 
-            oninput="sanitizeInput(this)">
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" 
-                onclick="togglePasswordVisibility('signup-password', this)">
-                <i class="fa fa-eye"></i>
-            </button>
-        </div>
-    </div>
-</div>
-
+                            <label for="password" class="control-label">Password</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control form" id="signup-password" name="password"
+                                    required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        onclick="togglePasswordVisibility('signup-password', this)">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
                             <small><a href="#" onclick="suggestStrongPassword()">Suggest Strong Password</a></small>
                         </div>
                         <div class="form-group">
@@ -155,62 +135,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </select>
                         </div>
                         <div class="g-recaptcha mb-3" data-sitekey="6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK"></div>
-                        <!-- Modify the existing signup form in the modal body -->
-<div class="form-group">
-    <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="terms-of-service" name="terms_accepted" required>
-        <label class="custom-control-label" for="terms-of-service">
-            I have read and agree to the <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a>
-        </label>
-    </div>
-</div>
-
-<!-- Add this Terms of Service Modal -->
-<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="termsModalLabel">Terms of Service</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h6>1. Acceptance of Terms</h6>
-                <p>By creating an account, you agree to these Terms of Service. Please read them carefully.</p>
-
-                <h6>2. User Account</h6>
-                <p>You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.</p>
-
-                <h6>3. User Conduct</h6>
-                <p>You agree not to use the service for any unlawful purposes or to violate any local, state, national, or international laws. Prohibited activities include, but are not limited to:</p>
-                <ul>
-                    <li>Harassment or abuse of other users</li>
-                    <li>Spreading harmful or malicious content</li>
-                    <li>Attempting to gain unauthorized access to system resources</li>
-                </ul>
-
-                <h6>4. Privacy</h6>
-                <p>Your use of the service is also governed by our Privacy Policy. We collect and use personal information as described in that policy.</p>
-
-                <h6>5. Intellectual Property</h6>
-                <p>All content on this platform is protected by intellectual property laws. Users may not reproduce, distribute, or create derivative works without explicit permission.</p>
-
-                <h6>6. Limitation of Liability</h6>
-                <p>We are not liable for any direct, indirect, incidental, special, or consequential damages resulting from your use of the service.</p>
-
-                <h6>7. Modifications to Terms</h6>
-                <p>We reserve the right to modify these terms at any time. Continued use of the service after changes constitutes acceptance of the new terms.</p>
-
-                <h6>8. Termination</h6>
-                <p>We may terminate or suspend your account at our discretion, with or without notice, for conduct that we believe violates these terms or is harmful to other users.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Sign Up</button>
@@ -220,10 +144,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
-    <center><div class="row mb-4">
-        <a href="#" class="btn-link float-end" data-toggle="modal" data-target="#forgotPasswordModal">Forgot
+    <div class="row mb-4">
+        <a href="#" class="btn btn-link float-end" data-toggle="modal" data-target="#forgotPasswordModal">Forgot
             Password?</a>
-    </div></center>
+    </div>
 
     <!-- Forgot Password Modal -->
     <div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog"
@@ -253,7 +177,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script>
-        
         function togglePasswordVisibility(fieldId, toggleButton) {
             const passwordField = document.getElementById(fieldId);
             const icon = toggleButton.querySelector('i');
@@ -396,112 +319,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         });
 
-
-        document.getElementById('forgot-password-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            var formData = new FormData(this);
-
-            // Show loading alert
-            Swal.fire({
-                title: 'Processing...',
-                html: 'Please wait while we process your request',
-                timerProgressBar: true,
-                didOpen: () => {
-                    Swal.showLoading();
-                },
-                position: 'top-end',
-                toast: true,
-                showConfirmButton: false
-            });
-
-            fetch('forgot-password.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                // Close loading alert
-                Swal.close();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Email Sent',
-                    text: data,
-                    position: 'top-end',
-                    toast: true,
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true
-                });
-            })
-            .catch(error => {
-                // Close loading alert
-                Swal.close();
-                console.error('Error:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'An unexpected error occurred. Please try again.',
-                    position: 'top-end',
-                    toast: true,
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true
-                });
-            });
-        });
-
         grecaptcha.ready(function () {
             grecaptcha.execute('6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK', { action: 'submit' }).then(function (token) {
                 document.getElementById('g-recaptcha-response').value = token;
             });
         });
-        
     </script>
-    <script>
-function sanitizeName(input) {
-    // Remove any characters that are not letters, spaces, hyphens, or apostrophes
-    input.value = input.value.replace(/[^A-Za-z\s'-]/g, '');
-    
-    // Limit length to prevent extremely long inputs
-    input.value = input.value.substring(0, 50);
-    
-    // Ensure first character is uppercase
-    input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
-}
-
-// Server-side validation example (pseudocode)
-function validateNameServer(name) {
-    // Regex to match only letters, spaces, hyphens, and apostrophes
-    const nameRegex = /^[A-Za-z\s'-]+$/;
-    
-    // Check if name matches the regex and is within length limits
-    if (nameRegex.test(name) && name.length >= 2 && name.length <= 50) {
-        return true; // Valid name
-    }
-    
-    return false; // Invalid name
-}
-function sanitizeInput(input) {
-    // Allow only letters and numbers, remove symbols
-    input.value = input.value.replace(/[^a-zA-Z0-9]/g, '');
-}
-
-function togglePasswordVisibility(fieldId, toggleBtn) {
-    const passwordField = document.getElementById(fieldId);
-    const icon = toggleBtn.querySelector("i");
-
-    if (passwordField.type === "password") {
-        passwordField.type = "text";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
-    } else {
-        passwordField.type = "password";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
-    }
-}
-</script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <?php require_once('inc/footer.php'); ?>
