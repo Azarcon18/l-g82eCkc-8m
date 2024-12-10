@@ -1,6 +1,6 @@
 <?php 
   require_once('config.php');
-
+  session_start(); // Start the session to access session variables
   // Include this at the top of your main PHP file
 if (isset($_SESSION['login_success'])) {
   echo "<script>
