@@ -90,60 +90,61 @@
     });
 
     $(document).ready(function () {
-  $('#login-frm').on('submit', function (e) {
-    e.preventDefault();  // Prevent form submission from reloading the page
+    $('#login-frm').on('submit', function (e) {
+        e.preventDefault();  // Prevent form submission from reloading the page
 
-    $.ajax({
-      url: 'login_action.php',
-      type: 'POST',
-      data: $(this).serialize(),
-      dataType: 'json',
-      beforeSend: function () {
-        Swal.fire({
-          title: "Logging In...",
-          text: "Please wait while we log you in.",
-          allowOutsideClick: false,
-          showConfirmButton: false,
-          willOpen: () => {
-            Swal.showLoading(); // Show loading animation
-          }
-        });
-      },
-      success: function (response) {
-        Swal.close(); // Close loading alert
+        $.ajax({
+            url: 'login_action.php',
+            type: 'POST',
+            data: $(this).serialize(),
+            dataType: 'json',
+            beforeSend: function () {
+                Swal.fire({
+                    title: "Logging In...",
+                    text: "Please wait while we log you in.",
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading(); // Show loading animation
+                    }
+                });
+            },
+            success: function (response) {
+                Swal.close(); // Close loading alert
 
-        if (response.status === "success") {
-          Swal.fire({
-            icon: "success",
-            title: "Success!",
-            text: response.message,
-            timer: 2000,
-            showConfirmButton: false
-          }).then(() => {
-            window.location.href = response.redirect;
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error!",
-            text: response.message,
-            timer: 2000,
-            showConfirmButton: false
-          });
-        }
-      },
-      error: function () {
-        Swal.close(); // Close loading alert
-        Swal.fire({
-          icon: "error",
-          title: "Error!",
-          text: "Something went wrong. Please try again later.",
-          timer: 2000,
-          showConfirmButton: false
+                if (response.status === "success") {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Success!",
+                        text: response.message,
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        // After the success alert, redirect to dashboard
+                        window.location.href = response.redirect; // Redirect to dashboard.php
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error!",
+                        text: response.message,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
+            },
+            error: function () {
+                Swal.close(); // Close loading alert
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Something went wrong. Please try again later.",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            }
         });
-      }
     });
-  });
 });
   </script>
 </body>
