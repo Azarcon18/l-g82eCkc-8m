@@ -2,12 +2,8 @@
 <!DOCTYPE html>
 <html lang="en" style="height: auto;">
 <?php require_once('inc/header.php'); ?>
-<head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-</head>
-
 <style>
-body {
+  body {
     background-color: #343a40; /* Fallback color */
     background: linear-gradient(45deg, #343a40, #007bff, #343a40, #007bff);
     background-size: 400% 400%;
@@ -98,8 +94,11 @@ body {
     }
   }
 </style>
-
 <body class="hold-transition login-page">
+  <script>
+    start_loader();
+  </script>
+
   <div class="login-box">
     <div class="card card-outline card-primary">
       <div class="card-header text-center">
@@ -117,7 +116,6 @@ body {
               </div>
             </div>
           </div>
-
           <div class="input-group mb-3">
             <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
             <div class="input-group-append">
@@ -126,12 +124,10 @@ body {
               </div>
             </div>
           </div>
-
           <div class="form-check mb-3">
             <input type="checkbox" class="form-check-input" id="show-password">
             <label class="form-check-label" for="show-password">Show Password</label>
           </div>
-
           <div class="row">
             <div class="col-8">
               <a href="<?php echo base_url; ?>">Go to Website</a>
@@ -146,14 +142,21 @@ body {
   </div>
 
   <script src="plugins/jquery/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
 
   <script>
+    $(document).ready(function(){
+      end_loader();
+    });
+
     document.getElementById('show-password').addEventListener('change', function() {
       const passwordField = document.getElementById('password');
-      passwordField.type = this.checked ? 'text' : 'password';
+      if (this.checked) {
+        passwordField.type = 'text';
+      } else {
+        passwordField.type = 'password';
+      }
     });
   </script>
 </body>
