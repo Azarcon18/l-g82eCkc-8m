@@ -269,7 +269,7 @@
                         icon: 'error',
                         title: 'Strong Password Required',
                         text: 'Please use a stronger password.',
-                        position: 'top-end',
+                        position: 'center',
                         toast: true,
                         showConfirmButton: false,
                         timer: 3000
@@ -286,7 +286,7 @@
                     didOpen: () => {
                         Swal.showLoading();
                     },
-                    position: 'top-end',
+                    position: 'center',
                     toast: true,
                     showConfirmButton: false
                 });
@@ -305,7 +305,7 @@
                         Swal.fire({
                             icon: 'error',
                             text: data.message,
-                            position: 'top-end',
+                            position: 'center',
                             toast: true,
                             showConfirmButton: false,
                             timer: 3000,
@@ -319,7 +319,7 @@
                     Swal.fire({
                         icon: 'error',
                         text: 'An unexpected error occurred. Please try again.',
-                        position: 'top-end',
+                        position: 'center',
                         toast: true,
                         showConfirmButton: false,
                         timer: 3000,
@@ -339,7 +339,7 @@
                     didOpen: () => {
                         Swal.showLoading();
                     },
-                    position: 'top-end',
+                    position: 'center',
                     toast: true,
                     showConfirmButton: false
                 });
@@ -354,7 +354,7 @@
                     Swal.fire({
                         icon: 'success',
                         text: data,
-                        position: 'top-end',
+                        position: 'center',
                         toast: true,
                         showConfirmButton: false,
                         timer: 3000,
@@ -367,7 +367,7 @@
                     Swal.fire({
                         icon: 'error',
                         text: 'An unexpected error occurred. Please try again.',
-                        position: 'top-end',
+                        position: 'center',
                         toast: true,
                         showConfirmButton: false,
                         timer: 3000,
