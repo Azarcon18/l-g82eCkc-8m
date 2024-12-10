@@ -45,32 +45,22 @@ if (substr($request, -4) == '.php') {
             <div class="col-lg-4">
                 <h3 class="text-center">Login</h3>
                 <hr>
-                <form id="login-form" action="classes/registereduser_login.php" method="post">
-                    <div class="form-group">
-                        <label for="email" class="control-label">Email</label>
-                        <input type="email" class="form-control form" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="control-label">Password</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control form" id="password" name="password" required>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button"
-                                    onclick="togglePasswordVisibility('password', this)">
-                                    <i class="fa fa-eye"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
-                    <div class="row mb-4 mt-3">
-                        <button type="submit" class="btn btn-primary float-end" name="login_btn">Login</button>
-                    </div>
-                    <div class="row mb-4">
-                        <button type="button" class="btn btn-secondary float-end" data-toggle="modal"
-                            data-target="#signupModal">Create Account</button>
-                    </div>
-                </form>
+                <form action="classes/registereduser_login.php" method="post">
+                <div class="form-group">
+                    <label for="email" class="control-label">Email</label>
+                    <input type="email" class="form-control form" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="control-label">Password</label>
+                    <input type="password" class="form-control form" name="password" required>
+                </div>
+                <div class="row mb-4">
+                    <button type="submit" class="btn btn-primary float-end" name="login_btn">Login</button>
+                </div>
+                <div class="row">
+                    <a class="btn btn-success text-center" data-toggle="modal" data-target="#signupModal">Create Account</a>
+                </div>
+            </form>
             </div>
         </div>
     </div>
