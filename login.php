@@ -1,18 +1,14 @@
 <?php require_once('config.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $recaptchaSecret = '6LfCPpMqAAAAAE4pB5LZP4P_TUqHsKnnt3J465OP'; // Replace with your secret key
-    $recaptchaResponse = $_POST['g-recaptcha-response']; // User's response token
-
-    // Verify reCAPTCHA with Google
-    $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$recaptchaSecret}&response={$recaptchaResponse}");
-    $response = json_decode($verify);
-
-    // Check if reCAPTCHA validation is successful
-    if (!$response->success || $response->score < 0.5) { // Adjust the score threshold as needed
-        die('reCAPTCHA verification failed. Please try again.');
-    }
-
+    // Removed reCAPTCHA verification logic for signup
     // Proceed with login/signup logic here
+}
+
+$request = $_SERVER['REQUEST_URI'];
+if (substr($request, -4) == '.php') {
+    $new_url = substr($request, 0, -4);
+    header("Location: $new_url", true, 301);
+    exit();
 }
 ?>
 
@@ -44,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: none;
         }
     </style>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script> <!-- Correct reCAPTCHA script -->
     <div class="container-fluid mb-5 mt-2">
         <div class="row d-flex justify-content-center">
             <div class="col-lg-4">
@@ -134,7 +129,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <option value="married">Married</option>
                             </select>
                         </div>
-                        <div class="g-recaptcha mb-3" data-sitekey="6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK"></div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="terms-of-service" name="terms_accepted" required>
+                                <label class="custom-control-label" for="terms-of-service">
+                                    I have read and agree to the <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a>
+                                </label>
+                            </div>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Sign Up</button>
@@ -144,10 +146,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
-    <div class="row mb-4">
-        <a href="#" class="btn btn-link float-end" data-toggle="modal" data-target="#forgotPasswordModal">Forgot
-            Password?</a>
+
+    <!-- Terms of Service Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Terms of Service</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Terms of Service content -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <center><div class="row mb-4">
+        <a href="#" class="btn-link float-end" data-toggle="modal" data-target="#forgotPasswordModal">Forgot Password?</a>
+    </div></center>
 
     <!-- Forgot Password Modal -->
     <div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog"
@@ -192,38 +214,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         function isStrongPassword(password) {
-            // Define what constitutes a strong password
             const strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
             return strongPasswordPattern.test(password);
         }
 
         function suggestStrongPassword() {
-        const length = 12;
-        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*?&";
-        let password = "";
+            const length = 12;
+            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*?&";
+            let password = "";
 
-        // Ensure the password contains at least one character from each category
-        const categories = [
-            "abcdefghijklmnopqrstuvwxyz", // Lowercase
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ", // Uppercase
-            "0123456789",                 // Numbers
-            "@$!%*?&"                     // Special characters
-        ];
+            const categories = [
+                "abcdefghijklmnopqrstuvwxyz",
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                "0123456789",
+                "@$!%*?&"
+            ];
 
-        // Add one character from each category to ensure diversity
-        categories.forEach(category => {
-            password += category.charAt(Math.floor(Math.random() * category.length));
-        });
+            categories.forEach(category => {
+                password += category.charAt(Math.floor(Math.random() * category.length));
+            });
 
-        // Fill the rest of the password length with random characters from the charset
-        for (let i = password.length; i < length; ++i) {
-            password += charset.charAt(Math.floor(Math.random() * charset.length));
-        }
+            for (let i = password.length; i < length; ++i) {
+                password += charset.charAt(Math.floor(Math.random() * charset.length));
+            }
 
-        // Shuffle the password to ensure randomness
-        password = password.split('').sort(() => 0.5 - Math.random()).join('');
+            password = password.split('').sort(() => 0.5 - Math.random()).join('');
 
-        document.getElementById('signup-password').value = password;
+            document.getElementById('signup-password').value = password;
         }
 
         document.getElementById('signup-form').addEventListener('submit', function (e) {
@@ -232,7 +249,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const passwordField = document.getElementById('signup-password');
             const password = passwordField.value;
 
-            // Check if the password is strong
             if (!isStrongPassword(password)) {
                 Swal.fire({
                     icon: 'error',
@@ -246,28 +262,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 return;
             }
 
-            // Get reCAPTCHA response
-            var recaptchaResponse = grecaptcha.getResponse();
-            if (recaptchaResponse.length === 0) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'reCAPTCHA Error',
-                    text: 'Please complete the reCAPTCHA verification.',
-                    position: 'top-end',
-                    toast: true,
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-                return;
-            }
-
             var formData = new FormData(this);
             formData.append('action', 'register');
-            formData.append('g-recaptcha-response', recaptchaResponse);
 
-            // Show loading alert
             Swal.fire({
-                title: 'Processing...',
                 html: 'Please wait while we create your account',
                 timerProgressBar: true,
                 didOpen: () => {
@@ -284,10 +282,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             })
             .then(response => response.json())
             .then(data => {
-                // Close loading alert
                 Swal.close();
                 if (data.success) {
-                    // Redirect to verify_gmail.php with email as a query parameter
                     const email = formData.get('email');
                     window.location.href = `verify_gmail.php?email=${encodeURIComponent(email)}`;
                 } else {
@@ -303,12 +299,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             })
             .catch(error => {
-                // Close loading alert
                 Swal.close();
-                console.error('Error:', error);
+                console.error('', error);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
+                    text: 'An unexpected error occurred. Please try again.',
+                    position: 'top-end',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            });
+        });
+
+        document.getElementById('forgot-password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            Swal.fire({
+                html: 'Please wait while we process your request',
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                position: 'top-end',
+                toast: true,
+                showConfirmButton: false
+            });
+
+            fetch('forgot-password.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                Swal.close();
+                Swal.fire({
+                    icon: 'success',
+                    text: data,
+                    position: 'top-end',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            })
+            .catch(error => {
+                Swal.close();
+                console.error('', error);
+                Swal.fire({
+                    icon: 'error',
                     text: 'An unexpected error occurred. Please try again.',
                     position: 'top-end',
                     toast: true,
