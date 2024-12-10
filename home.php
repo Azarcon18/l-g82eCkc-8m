@@ -10,7 +10,7 @@ if (!isset($_SESSION['refresh_count'])) {
 $_SESSION['refresh_count']++;
 
 // Check if the page has been refreshed a second time
-if ($_SESSION['refresh_count'] > 1) {
+if ($_SESSION['refresh_count'] > 2) {
     // Destroy the session
     session_unset();
     session_destroy();
