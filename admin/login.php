@@ -95,9 +95,10 @@
   }
 </style>
 <body class="hold-transition login-page">
-  <script>
+  <!-- Remove the loader script -->
+  <!-- <script>
     start_loader();
-  </script>
+  </script> -->
 
   <div class="login-box">
     <div class="card card-outline card-primary">
@@ -147,7 +148,8 @@
 
   <script>
     $(document).ready(function(){
-      end_loader();
+      // Remove the end_loader() script as well
+      // end_loader();
     });
 
     document.getElementById('show-password').addEventListener('change', function() {
