@@ -19,38 +19,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($user['password'] === md5($password)) {
             // Successful login, set session variables
             $_SESSION['user'] = $username;
+            echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
             echo '<script>
                     Swal.fire({
                         title: "Login Successful!",
                         text: "Redirecting to the dashboard...",
                         icon: "success",
-                        timer: 2000,
+                        timer: 1500,
                         showConfirmButton: false
                     }).then(() => {
-                        window.location.href = "dashboard.php";
+                        window.location.replace("dashboard.php");
                     });
                   </script>';
         } else {
             // Incorrect password
+            echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
             echo '<script>
                     Swal.fire({
                         title: "Login Failed",
                         text: "Invalid username or password.",
                         icon: "error"
                     }).then(() => {
-                        window.location.href = "login.php";
+                        window.location.replace("login.php");
                     });
                   </script>';
         }
     } else {
         // Username not found
+        echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
         echo '<script>
                 Swal.fire({
                     title: "Login Failed",
                     text: "Invalid username or password.",
                     icon: "error"
                 }).then(() => {
-                    window.location.href = "login.php";
+                    window.location.replace("login.php");
                 });
               </script>';
     }
