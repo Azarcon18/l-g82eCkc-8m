@@ -1,7 +1,17 @@
 <?php
-// Include the session and database configuration
-include '../config.php';
-session_start(); // Start the session
+
+// Database connection
+$servername = "127.0.0.1"; // Change if necessary
+$username = "u510162695_church_db"; // Change if necessary
+$password = "1Church_db"; // Change if necessary
+$dbname = "u510162695_church_db"; // Change to your database name
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 // Initialize login attempts and lockout time if not set
 if (!isset($_SESSION['login_attempts'])) {
