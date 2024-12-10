@@ -137,12 +137,22 @@
     <div class="custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" id="terms-of-service" name="terms_accepted" required>
         <label class="custom-control-label" for="terms-of-service">
-            I have read and agree to the 
-            <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a>
+            I have read and agree to the <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a>
         </label>
     </div>
 </div>
-<div class="modal-body">
+
+<!-- Add this Terms of Service Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="termsModalLabel">Terms of Service</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
                 <h6>1. Acceptance of Terms</h6>
                 <p>By creating an account, you agree to these Terms of Service. Please read them carefully.</p>
 
