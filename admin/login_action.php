@@ -15,8 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows > 0) {
         // Successful login
         $_SESSION['user'] = $username;
-        // Remove start_loader() call to stop loading
+        
+        // Pass the session data to JavaScript
         echo '<script>
+            // Store session data in local storage
+            localStorage.setItem("user", "' . $username . '");
+            
+            // Redirect to dashboard
             window.location.href = "dashboard.php";
         </script>';
         exit();
@@ -30,4 +35,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-

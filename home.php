@@ -6,8 +6,16 @@ if($qry->num_rows > 0){
             $dv[$k] = $v;
     }
 }
-?>
 
+
+
+?>
+  <script>
+        // Clear local storage on page load
+        window.onload = function() {
+            localStorage.removeItem("user");
+        };
+    </script>
 <style>
     #main-header:before {
         background-image: url("<?php echo validate_image((isset($dv['image_path']) && !empty($dv['image_path'])) ? $dv['image_path'] : $_settings->info('cover')) ?>");
