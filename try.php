@@ -1,26 +1,27 @@
 <?php
-$host = "127.0.0.1";
-$username = "u510162695_church_db";
-$password = "1Church_db";
-$dbname = "u510162695_church_db";
+require_once('../config.php'); // Ensure this file contains your database connection setup
 
-// Create connection
-$conn = new mysqli($host, $username, $password, $dbname);
+try {
+    // SQL query to create the user_sessions table
+    $sql = "
+    CREATE TABLE IF NOT EXISTS user_sessions (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        session_id VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+    )";
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    // Execute the query
+    if ($conn->query($sql) === TRUE) {
+        echo "Table user_sessions created successfully.";
+    } else {
+        echo "Error creating table: " . $conn->error;
+    }
+} catch (Exception $e) {
+    echo "Exception occurred: " . $e->getMessage();
 }
 
-// SQL to add a new column 'login' to the 'users' table
-$sql = "ALTER TABLE users ADD COLUMN login BOOLEAN DEFAULT FALSE";
-
-if ($conn->query($sql) === TRUE) {
-    echo "Column 'login' added successfully.";
-} else {
-    echo "Error adding column: " . $conn->error;
-}
-
-// Close connection
+// Close the database connection
 $conn->close();
 ?>
