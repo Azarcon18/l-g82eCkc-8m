@@ -19,23 +19,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Verify password using MD5 hash
         if (md5($password) === $user['password']) {
             // Successful login, set session variables
-            $_SESSION['user'] = $username;  // You can store the user ID or any other data in the session
+            $_SESSION['user'] = $username;  // Store user info in session
             header('Location: dashboard.php');  // Redirect to dashboard
             exit();
         } else {
             // Failed login - incorrect password
-            echo '<script>
-                    alert("Invalid username or password");
-                    window.location.href = "login.php";
-                  </script>';
+            $_SESSION['error'] = "Invalid username or password.";
+            header('Location: login.php');  // Redirect to login page
             exit();
         }
     } else {
         // Failed login - username not found
-        echo '<script>
-                alert("Invalid username or password");
-                window.location.href = "login.php";
-              </script>';
+        $_SESSION['error'] = "Invalid username or password.";
+        header('Location: login.php');  // Redirect to login page
         exit();
     }
 }
