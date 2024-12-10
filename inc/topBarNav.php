@@ -44,6 +44,7 @@
 <!-- Include session management -->
 <?php 
 include 'session.php'; 
+
 ?>
 
 <!-- Navbar -->
@@ -83,7 +84,7 @@ include 'session.php';
                         </ul>
                     </div>
                 <?php else: ?>
-                    <a href="login.php" class="btn btn-primary btn-sm">Login</a>
+                    <li><a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">Logout</a></li>
                     <a href="./admin/" class="btn btn-primary btn-sm ms-3">Admin Login</a>
                 <?php endif; ?>
                 <button id="donation" class="btn btn-success btn-sm ms-3">Donate</button>
@@ -140,7 +141,8 @@ include 'session.php';
         </div>
     </div>
 </div>
-
+<!-- Add this right after Bootstrap CSS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/2.1.1/tesseract.min.js"></script>
 <script>
@@ -234,6 +236,41 @@ include 'session.php';
             }
         });
     });
+
+
+
+    // Add this inside your DOMContentLoaded event listener
+const logoutBtn = document.getElementById('logoutBtn');
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out of your account!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, logout!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Show success message
+                Swal.fire({
+                    title: 'Logged Out!',
+                    text: 'You have been successfully logged out.',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
+                    // Redirect to logout page
+                    window.location.href = 'logout.php';
+                });
+            }
+        });
+    });
+}
 </script>
 
 </body>
