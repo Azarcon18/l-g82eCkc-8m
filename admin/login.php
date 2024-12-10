@@ -1,16 +1,10 @@
+<?php require_once('../config.php'); ?>
 <!DOCTYPE html>
 <html lang="en" style="height: auto;">
-
-<!-- SweetAlert2 CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
-<?php require_once('../config.php'); ?>
 <?php require_once('inc/header.php'); ?>
-
 <style>
-  /* Custom Styles for Login */
   body {
-    background-color: #343a40;
+    background-color: #343a40; /* Fallback color */
     background: linear-gradient(45deg, #343a40, #007bff, #343a40, #007bff);
     background-size: 400% 400%;
     animation: gradientAnimation 15s ease infinite;
@@ -30,13 +24,81 @@
   }
 
   @keyframes loginBoxAnimation {
-    0% { opacity: 0; transform: translateY(-50px) scale(0.8); }
-    50% { opacity: 0.5; transform: translateY(0) scale(1.05); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
+    0% {
+      opacity: 0;
+      transform: translateY(-50px) scale(0.8);
+    }
+    50% {
+      opacity: 0.5;
+      transform: translateY(0) scale(1.05);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-header {
+    background-color: #007bff;
+    color: white;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+
+  .form-control {
+    border-radius: 5px;
+  }
+
+  .input-group-text {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+  }
+
+  a {
+    color: #007bff;
+  }
+
+  .login-box-msg, .card-header .h1 {
+    font-size: 1.2em;
+    font-weight: bold;
+    background: linear-gradient(45deg, #007bff, #343a40);
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: textAnimation 5s ease infinite;
+  }
+
+  @keyframes textAnimation {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .login-box {
+      width: 100%;
+      margin: 10% auto;
+    }
   }
 </style>
-
 <body class="hold-transition login-page">
+  <script>
+    start_loader();
+  </script>
+
   <div class="login-box">
     <div class="card card-outline card-primary">
       <div class="card-header text-center">
@@ -79,73 +141,23 @@
     </div>
   </div>
 
-  <!-- External Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="dist/js/adminlte.min.js"></script>
 
   <script>
-    // Show/Hide Password Toggle
-    document.getElementById('show-password').addEventListener('change', function () {
+    $(document).ready(function(){
+      end_loader();
+    });
+
+    document.getElementById('show-password').addEventListener('change', function() {
       const passwordField = document.getElementById('password');
-      passwordField.type = this.checked ? 'text' : 'password';
+      if (this.checked) {
+        passwordField.type = 'text';
+      } else {
+        passwordField.type = 'password';
+      }
     });
-
-    $(document).ready(function () {
-    $('#login-frm').on('submit', function (e) {
-        e.preventDefault();  // Prevent form submission from reloading the page
-
-        $.ajax({
-            url: 'login_action.php',
-            type: 'POST',
-            data: $(this).serialize(),
-            dataType: 'json',
-            beforeSend: function () {
-                Swal.fire({
-                    title: "Logging In...",
-                    text: "Please wait while we log you in.",
-                    allowOutsideClick: false,
-                    showConfirmButton: false,
-                    willOpen: () => {
-                        Swal.showLoading(); // Show loading animation
-                    }
-                });
-            },
-            success: function (response) {
-                Swal.close(); // Close loading alert
-
-                if (response.status === "success") {
-                    Swal.fire({
-                        icon: "success",
-                        title: "Success!",
-                        text: response.message,
-                        timer: 2000,
-                        showConfirmButton: false
-                    }).then(() => {
-                        // After the success alert, redirect to dashboard
-                        window.location.href = response.redirect; // Redirect to dashboard.php
-                    });
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error!",
-                        text: response.message,
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                }
-            },
-            error: function () {
-                Swal.close(); // Close loading alert
-                Swal.fire({
-                    icon: "error",
-                    title: "Error!",
-                    text: "Something went wrong. Please try again later.",
-                    timer: 2000,
-                    showConfirmButton: false
-                });
-            }
-        });
-    });
-});
   </script>
 </body>
 </html>
