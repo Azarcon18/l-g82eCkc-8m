@@ -6,8 +6,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
 
-    // Use prepared statement for secure authentication
+    // Debug: Ensure inputs are captured
+    if (empty($username) || empty($password)) {
+        die("Username or Password cannot be empty.");
+    }
+
+    // Secure query execution
     $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+    if (!$stmt) {
+        die("Query Preparation Failed: " . $conn->error);
+    }
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -15,10 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
-        // Verify password using MD5 hash
+        // Check password with MD5
         if ($user['password'] === md5($password)) {
-            // Successful login, set session variables
-            $_SESSION['user'] = $username;
+            $_SESSION['user'] = $username;  // Successful login
             echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
             echo '<script>
                     Swal.fire({
@@ -32,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     });
                   </script>';
         } else {
-            // Incorrect password
             echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
             echo '<script>
                     Swal.fire({
@@ -45,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   </script>';
         }
     } else {
-        // Username not found
         echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
         echo '<script>
                 Swal.fire({
