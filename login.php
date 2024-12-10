@@ -104,7 +104,7 @@ if (substr($request, -4) == '.php') {
                             <label for="password" class="control-label">Password</label>
                             <div class="input-group">
                                 <input type="password" class="form-control form" id="signup-password" name="password"
-                                    required>
+                                    required oninput="validatePassword(this)">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button"
                                         onclick="togglePasswordVisibility('signup-password', this)">
@@ -214,15 +214,19 @@ if (substr($request, -4) == '.php') {
             }
         }
 
+        function validatePassword(input) {
+            // Allow only alphabetic characters and numbers
+            input.value = input.value.replace(/[^a-zA-Z0-9]/g, '');
+        }
+
         function isStrongPassword(password) {
-            // Updated regex to exclude symbols
             const strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
             return strongPasswordPattern.test(password);
         }
 
         function suggestStrongPassword() {
             const length = 12;
-            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // Removed symbols
+            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             let password = "";
 
             const categories = [
