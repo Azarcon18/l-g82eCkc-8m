@@ -13,21 +13,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = $stmt->get_result();      
 
     if ($result->num_rows > 0) {         
-        // Successful login         
         $_SESSION['user'] = $username;         
         echo '<script>
-                alert("Login successful!");
-                window.location.href = "dashboard.php";
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000); // Reload after 1 second
+                Swal.fire({
+                    icon: "success",
+                    title: "Login Successful!",
+                    text: "Redirecting to dashboard...",
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.href = "dashboard.php";
+                });
               </script>';
         exit();     
     } else {         
-        // Failed login         
         echo '<script>
-                alert("Invalid username or password");
-                window.location.href = "login.php";
+                Swal.fire({
+                    icon: "error",
+                    title: "Login Failed!",
+                    text: "Invalid username or password",
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.href = "login.php";
+                });
               </script>';
         exit();     
     } 

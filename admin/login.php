@@ -1,5 +1,7 @@
 <?php require_once('../config.php'); ?>
 <!DOCTYPE html>
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <html lang="en" style="height: auto;">
 <?php require_once('inc/header.php'); ?>
 <style>
@@ -95,6 +97,9 @@
   }
 </style>
 <body class="hold-transition login-page">
+  <script>
+    start_loader();
+  </script>
 
   <div class="login-box">
     <div class="card card-outline card-primary">
@@ -156,5 +161,8 @@
       }
     });
   </script>
+  <!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 </html>
