@@ -15,10 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows > 0) {
         // Successful login
         $_SESSION['user'] = $username;
-        // Remove start_loader() call to stop loading
-        echo '<script>
-            window.location.href = "dashboard.php";
-        </script>';
+        // Redirect to dashboard.php
+        header("Location: dashboard.php");
         exit();
     } else {
         // Failed login
@@ -30,4 +28,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-
