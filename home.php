@@ -43,7 +43,11 @@ if($qry->num_rows > 0){
     .truncate-1 {
         overflow: hidden;
         text-overflow: ellipsis;
-        white-space: nowrap;
+    }
+    .word-wrap {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal; /* Allow text to wrap */
     }
 
     /* Media Query for Small Screens */
@@ -128,7 +132,7 @@ if($qry->num_rows > 0){
                    </div>
                    <div class="flex-grow-1">
                        <p class="truncate-1 fw-bold mb-1"><?php echo $row['title'] ?></p>
-                       <small class="truncate-1 text-muted"><?php echo $row['meta_description'] ?></small>
+                       <small class="word-wrap text-muted"><?php echo $row['meta_description'] ?></small>
                    </div>
                </a>
                <?php endwhile; ?>
