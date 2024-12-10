@@ -86,7 +86,7 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Account verified successfully!',
-                                position: 'top-end',
+                                position: 'center',
                                 showConfirmButton: false,
                                 timer: 1500,
                                 customClass: {
@@ -99,7 +99,7 @@
                             Swal.fire({
                                 icon: 'error',
                                 title: response,
-                                position: 'top-end',
+                                position: 'center',
                                 showConfirmButton: false,
                                 timer: 1500,
                                 customClass: {
@@ -112,7 +112,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'An error occurred while verifying the code.',
-                            position: 'top-end',
+                            position: 'center',
                             showConfirmButton: false,
                             timer: 1500,
                             customClass: {
