@@ -110,7 +110,7 @@
             </button>
         </div>
     </div>
-    <small><a href="#" onclick="suggestStrongPassword()">Suggest Strong Password</a></small>
+    <!-- <small><a href="#" onclick="suggestStrongPassword()">Suggest Strong Password</a></small>-->
 
     <!-- Password Strength Bar -->
     <div class="mt-2">
