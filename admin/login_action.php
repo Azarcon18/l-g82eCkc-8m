@@ -13,25 +13,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // User exists, fetch user data
         $user = $result->fetch_assoc();
 
         // Verify password using MD5 hash
         if (md5($password) === $user['password']) {
             // Successful login, set session variables
-            $_SESSION['user'] = $username;  // Store user info in session
-            header('Location: dashboard.php');  // Redirect to dashboard
+            $_SESSION['user'] = $username;  
+            echo '<script>
+                    Swal.fire({
+                        title: "Login Successful!",
+                        text: "Redirecting to the dashboard...",
+                        icon: "success",
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.href = "dashboard.php";
+                    });
+                  </script>';
             exit();
         } else {
-            // Failed login - incorrect password
-            $_SESSION['error'] = "Invalid username or password.";
-            header('Location: login.php');  // Redirect to login page
+            echo '<script>
+                    Swal.fire({
+                        title: "Login Failed",
+                        text: "Invalid username or password.",
+                        icon: "error"
+                    }).then(() => {
+                        window.location.href = "login.php";
+                    });
+                  </script>';
             exit();
         }
     } else {
-        // Failed login - username not found
-        $_SESSION['error'] = "Invalid username or password.";
-        header('Location: login.php');  // Redirect to login page
+        echo '<script>
+                Swal.fire({
+                    title: "Login Failed",
+                    text: "Invalid username or password.",
+                    icon: "error"
+                }).then(() => {
+                    window.location.href = "login.php";
+                });
+              </script>';
         exit();
     }
 }
