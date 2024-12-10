@@ -95,9 +95,7 @@
   }
 </style>
 <body class="hold-transition login-page">
-  <script>
-    start_loader();
-  </script>
+ 
 
   <div class="login-box">
     <div class="card card-outline card-primary">
@@ -146,9 +144,7 @@
   <script src="dist/js/adminlte.min.js"></script>
 
   <script>
-    $(document).ready(function(){
-      end_loader();
-    });
+  
 
     document.getElementById('show-password').addEventListener('change', function() {
       const passwordField = document.getElementById('password');
