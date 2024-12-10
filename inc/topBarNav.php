@@ -27,7 +27,6 @@
 
         /* Ensures the QR code is centered within the modal */
         #qrCode {
-            display: none;
             width: 250px;
             height: 250px;
             margin: 0 auto;
@@ -75,7 +74,6 @@ include 'session.php';
                 <?php if (isset($_SESSION['user_id']) && isset($_SESSION['name'])): ?>
                     <div class="dropdown">
                         <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" id="userDropdown" role="button" aria-expanded="false">
-                            
                             <span class="user-name ms-2">Hi, <?php echo htmlspecialchars($_SESSION['name']); ?>!</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
@@ -106,7 +104,7 @@ include 'session.php';
                 <form id="donation-form">
                     <div class="mb-3 text-center">
                         <p id="scanText" class="text-primary" style="cursor: pointer;">SCAN ME</p>
-                        <img id="qrCode" src="qr_code.jpg" alt="QR Code">
+                        <img id="qrCode" src="qr_code.jpg" alt="QR Code" class="d-none">
                     </div>
                     <div class="mb-3">
                         <label for="gcashReceipt" class="form-label">Upload GCASH Receipt</label>
@@ -237,7 +235,6 @@ include 'session.php';
         });
     });
 </script>
-
 
 </body>
 </html>
