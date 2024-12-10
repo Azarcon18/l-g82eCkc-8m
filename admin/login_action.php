@@ -3,8 +3,8 @@ session_start();
 require_once('../config.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
 
     // Use prepared statement for secure authentication
     $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
@@ -16,9 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $user = $result->fetch_assoc();
 
         // Verify password using MD5 hash
-        if (md5($password) === $user['password']) {
+        if ($user['password'] === md5($password)) {
             // Successful login, set session variables
-            $_SESSION['user'] = $username;  
+            $_SESSION['user'] = $username;
             echo '<script>
                     Swal.fire({
                         title: "Login Successful!",
@@ -30,8 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         window.location.href = "dashboard.php";
                     });
                   </script>';
-            exit();
         } else {
+            // Incorrect password
             echo '<script>
                     Swal.fire({
                         title: "Login Failed",
@@ -41,9 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         window.location.href = "login.php";
                     });
                   </script>';
-            exit();
         }
     } else {
+        // Username not found
         echo '<script>
                 Swal.fire({
                     title: "Login Failed",
@@ -53,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     window.location.href = "login.php";
                 });
               </script>';
-        exit();
     }
 }
 ?>
