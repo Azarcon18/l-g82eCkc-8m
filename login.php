@@ -159,7 +159,7 @@ if (substr($request, -4) == '.php') {
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+                <div class="modal-body">
     <h6>1. Acceptance of Terms</h6>
     <p>By creating an account for online baptism or wedding requests at Immaculate Conception Parish, you agree to these Terms of Service. Please review them carefully.</p>
 
