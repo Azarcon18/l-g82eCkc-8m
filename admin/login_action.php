@@ -15,12 +15,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows > 0) {         
         // Successful login         
         $_SESSION['user'] = $username;         
-        header("Location: dashboard.php");         
+        echo '<script>
+                alert("Login successful!");
+                window.location.href = "dashboard.php";
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000); // Reload after 1 second
+              </script>';
         exit();     
     } else {         
         // Failed login         
-        $_SESSION['error'] = "Invalid username or password";         
-        header("Location: login.php");         
+        echo '<script>
+                alert("Invalid username or password");
+                window.location.href = "login.php";
+              </script>';
         exit();     
     } 
 }
