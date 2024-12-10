@@ -14,31 +14,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($result->num_rows > 0) {         
         $_SESSION['user'] = $username;         
-        echo '<script>
-                Swal.fire({
-                    icon: "success",
-                    title: "Login Successful!",
-                    text: "Redirecting to dashboard...",
-                    timer: 2000,
-                    showConfirmButton: false
-                }).then(() => {
-                    window.location.href = "dashboard.php";
-                });
-              </script>';
-        exit();     
+        echo json_encode([
+            "status" => "success", 
+            "message" => "Login Successful! Redirecting to dashboard...",
+            "redirect" => "dashboard.php"
+        ]);
     } else {         
-        echo '<script>
-                Swal.fire({
-                    icon: "error",
-                    title: "Login Failed!",
-                    text: "Invalid username or password",
-                    timer: 2000,
-                    showConfirmButton: false
-                }).then(() => {
-                    window.location.href = "login.php";
-                });
-              </script>';
-        exit();     
+        echo json_encode([
+            "status" => "error", 
+            "message" => "Invalid username or password"
+        ]);
     } 
+    exit();
 }
 ?>

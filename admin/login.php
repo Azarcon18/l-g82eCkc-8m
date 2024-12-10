@@ -157,6 +157,49 @@
   </script>
   <!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  <script>
+$(document).ready(function () {
+  $('#login-frm').submit(function (e) {
+    e.preventDefault(); // Prevent form from submitting normally
 
+    $.ajax({
+      url: 'login_action.php',
+      type: 'POST',
+      data: $(this).serialize(),
+      dataType: 'json',
+      success: function (response) {
+        if (response.status === "success") {
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: response.message,
+            timer: 2000,
+            showConfirmButton: false
+          }).then(() => {
+            window.location.href = response.redirect;
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: response.message,
+            timer: 2000,
+            showConfirmButton: false
+          });
+        }
+      },
+      error: function () {
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: "Something went wrong. Please try again later.",
+          timer: 2000,
+          showConfirmButton: false
+        });
+      }
+    });
+  });
+</script>
 </body>
 </html>
