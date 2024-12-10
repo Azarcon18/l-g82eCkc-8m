@@ -20,6 +20,7 @@ if (isset($_SESSION['login_success'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php require_once('inc/header.php') ?>
 <body style="background-color: white;">
 <?php if ($_settings->chk_flashdata('success')): ?>
