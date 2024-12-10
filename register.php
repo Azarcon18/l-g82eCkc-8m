@@ -1,22 +1,22 @@
 <?php
 require_once('../config.php');
 
-// Retrieve form data
-$name = $_POST['name'];
-$user_name = $_POST['user_name'];
-$email = $_POST['email'];
+// Retrieve and sanitize form data
+$name = htmlspecialchars(trim($_POST['name']));
+$user_name = htmlspecialchars(trim($_POST['user_name']));
+$email = htmlspecialchars(trim($_POST['email']));
 $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-$phone_no = $_POST['phone_no'];
-$address = $_POST['address'];
-$status = $_POST['status'];
+$phone_no = htmlspecialchars(trim($_POST['phone_no']));
+$address = htmlspecialchars(trim($_POST['address']));
+$status = htmlspecialchars(trim($_POST['status']));
 $verification_code = md5(uniqid(rand(), true)); // Unique code for verification
 
-// Insert user into the database
-$query = "INSERT INTO registered_users (name, user_name, email, password, phone_no, address, status, verification_code, is_verified) 
-          VALUES ('$name', '$user_name', '$email', '$password', '$phone_no', '$address', '$status', '$verification_code', 0)";
-$result = $conn->query($query);
+// Prepare and bind
+$stmt = $conn->prepare("INSERT INTO registered_users (name, user_name, email, password, phone_no, address, status, verification_code, is_verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)");
+$stmt->bind_param("ssssssss", $name, $user_name, $email, $password, $phone_no, $address, $status, $verification_code);
 
-if ($result) {
+// Execute the statement
+if ($stmt->execute()) {
     // Send verification email
     $subject = "Email Verification";
     $message = "Hello $name, \n\nPlease verify your email by clicking the link below:\n";
@@ -32,5 +32,8 @@ if ($result) {
     $_SESSION['error'] = "Failed to create account.";
 }
 
+// Close the statement
+$stmt->close();
+
+// Redirect to index
 header('Location: ../index.php');
-?>
