@@ -1,26 +1,30 @@
 <?php
-// Assuming you have a database connection established
-require 'initialize.php';
+function logoutUser() {
+    // Start the session if it's not already started
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
-// Start the session
-session_start();
+    // Unset all session variables
+    $_SESSION = [];
 
-// Get the user ID from the session
-$userId = $_SESSION['user_id'];
+    // Get session parameters
+    $params = session_get_cookie_params();
 
-// Invalidate all sessions for the user in the database
-$stmt = $db->prepare("DELETE FROM user_sessions WHERE user_id = ?");
-$stmt->bind_param("i", $userId);
-$stmt->execute();
-$stmt->close();
+    // Delete the session cookie
+    setcookie(session_name(), '', time() - 42000,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]
+    );
 
-// Unset all session variables
-session_unset();
+    // Destroy the session
+    session_destroy();
 
-// Destroy the session
-session_destroy();
+    // Redirect to the login page or home page
+    header("Location: index.php");
+    exit();
+}
 
-// Redirect to the login page
-header("Location: index.php");
-exit();
+// Call the logout function
+logoutUser();
 ?>
