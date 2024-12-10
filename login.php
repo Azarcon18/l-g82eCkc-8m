@@ -292,30 +292,7 @@
                 return strongPasswordPattern.test(password);
             }
     
-            function suggestStrongPassword() {
-                const length = 12;
-                const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*?&";
-                let password = "";
-    
-                const categories = [
-                    "abcdefghijklmnopqrstuvwxyz",
-                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-                    "0123456789",
-                    "@$!%*?&"
-                ];
-    
-                categories.forEach(category => {
-                    password += category.charAt(Math.floor(Math.random() * category.length));
-                });
-    
-                for (let i = password.length; i < length; ++i) {
-                    password += charset.charAt(Math.floor(Math.random() * charset.length));
-                }
-    
-                password = password.split('').sort(() => 0.5 - Math.random()).join('');
-    
-                document.getElementById('signup-password').value = password;
-            }
+            
 
             function validateName(input) {
                 // Allow only alphabetic characters and spaces
