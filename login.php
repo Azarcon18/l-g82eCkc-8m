@@ -134,13 +134,33 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="terms-of-service" name="terms_accepted" required>
-                                    <label class="custom-control-label" for="terms-of-service">
-                                        I have read and agree to the <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a>
-                                    </label>
-                                </div>
-                            </div>
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="terms-of-service" name="terms_accepted" required>
+        <label class="custom-control-label" for="terms-of-service">
+            I have read and agree to the 
+            <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a>
+        </label>
+    </div>
+</div>
+<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="termsModalLabel">Terms of Service</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Your terms of service content goes here. You can provide a detailed description of your terms, conditions, and privacy policies.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Sign Up</button>
