@@ -3,6 +3,7 @@
 include '../config.php';
 session_start(); // Start the session
 
+// Initialize login attempts and lockout time if not set
 if (!isset($_SESSION['login_attempts'])) {
     $_SESSION['login_attempts'] = 0;
     $_SESSION['lockout_time'] = null;
@@ -26,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!empty($email) && !empty($password)) {
         // Prepare SQL statement to prevent SQL injection
-        $sql = "SELECT user_id, name, user_name, email, password FROM registered_users WHERE email = ? AND status = 'active' LIMIT 1";
+        $sql = "SELECT user_id, name, email, password FROM registered_users WHERE email = ? AND status = 'active' LIMIT 1";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -55,10 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 // Invalid password
                 $_SESSION['login_attempts']++;
+                $_SESSION['error'] = "Invalid email or password.";
             }
         } else {
             // No active user found with these credentials
             $_SESSION['login_attempts']++;
+            $_SESSION['error'] = "Invalid email or password.";
         }
 
         $stmt->close();
