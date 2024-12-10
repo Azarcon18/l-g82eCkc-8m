@@ -109,7 +109,27 @@ if($qry->num_rows > 0){
 }
     }
 </style>
+<?php
 
+session_start(); // Start the session to access session variables
+// Include this at the top of your main PHP file
+if (isset($_SESSION['login_success'])) {
+echo "<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Login Successful',
+        text: 'Welcome back!',
+        position: 'center',
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+    });
+</script>";
+unset($_SESSION['login_success']); // Clear the session variable
+}
+
+?>
 <!-- Header-->
 <header class="bg-dark py-5 d-flex align-items-center" id="main-header">
     <div class="container px-4 px-lg-5 my-5 w-100">

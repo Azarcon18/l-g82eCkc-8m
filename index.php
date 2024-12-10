@@ -1,22 +1,6 @@
 <?php 
   require_once('config.php');
-  session_start(); // Start the session to access session variables
-  // Include this at the top of your main PHP file
-if (isset($_SESSION['login_success'])) {
-  echo "<script>
-      Swal.fire({
-          icon: 'success',
-          title: 'Login Successful',
-          text: 'Welcome back!',
-          position: 'center',
-          toast: true,
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true
-      });
-  </script>";
-  unset($_SESSION['login_success']); // Clear the session variable
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
