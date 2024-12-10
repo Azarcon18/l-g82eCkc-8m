@@ -1,4 +1,7 @@
 <?php 
+require_once('config.php');
+session_start(); // Start the session to access session variables
+
 $qry = $conn->query("SELECT * FROM `daily_verses` where `display_date` = '".date('Y-m-d')."' ");
 if($qry->num_rows > 0){
     foreach($qry->fetch_array() as $k => $v){
@@ -6,8 +9,6 @@ if($qry->num_rows > 0){
             $dv[$k] = $v;
     }
 }
-
-
 ?>
 
 <style>
@@ -42,42 +43,37 @@ if($qry->num_rows > 0){
     .recent-blog-img:hover {
         transform: scale(1.1);
     }
-
-
     .truncate-1 {
-    overflow: hidden;
-    word-wrap: break-word; /* Allows long words to break and wrap to the next line */
-    white-space: normal; /* Allows the text to wrap normally */
-}
-
-    /* Media Query for Small Screens */
+        overflow: hidden;
+        word-wrap: break-word;
+        white-space: normal;
+    }
     @media (max-width: 768px) {
         #main-header {
             height: 60vh;
         }
         #main-header h1 {
-            font-size: 2rem; /* Reduce font size on small screens */
+            font-size: 2rem;
         }
         #main-header p {
-            font-size: 1rem; /* Adjust verse source text size */
+            font-size: 1rem;
         }
         .container {
             padding-left: 10px;
             padding-right: 10px;
         }
         .recent-blog-img {
-            max-width: 100%; /* Ensure images fit within their container */
+            max-width: 100%;
             height: auto;
         }
         .row.gx-4 {
-            flex-direction: column; /* Stack the blogs and content on small screens */
+            flex-direction: column;
         }
         .col-md-8, .col-md-4 {
-            width: 100%; /* Ensure both columns take full width on smaller screens */
+            width: 100%;
             margin-bottom: 20px;
         }
         .col-md-4 {
-            /* Ensures the blog section becomes full-width on small screens */
             padding-left: 0 !important;
         }
         .border-start {
@@ -85,51 +81,59 @@ if($qry->num_rows > 0){
             border-top: 1px solid #ddd;
         }
         .truncate-1 {
-            font-size: 0.9rem; /* Reduce font size for mobile view */
+            font-size: 0.9rem;
         }
-        .truncate-1 {
-    overflow: hidden;
-    word-wrap: break-word; /* Allows long words to break and wrap to the next line */
-    white-space: normal; /* Allows the text to wrap normally */
-}
     }
-
-    /* For very small devices */
     @media (max-width: 480px) {
         #main-header h1 {
-            font-size: 1.5rem; /* Make the title smaller on very small screens */
+            font-size: 1.5rem;
         }
         #main-header p {
-            font-size: 0.9rem; /* Reduce the font size of the verse attribution */
+            font-size: 0.9rem;
         }
         .truncate-1 {
-    overflow: hidden;
-    word-wrap: break-word; /* Allows long words to break and wrap to the next line */
-    white-space: normal; /* Allows the text to wrap normally */
-}
+            overflow: hidden;
+            word-wrap: break-word;
+            white-space: normal;
+        }
     }
 </style>
-<?php
 
-session_start(); // Start the session to access session variables
+<?php
 // Include this at the top of your main PHP file
 if (isset($_SESSION['login_success'])) {
-echo "<script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Login Successful',
-        text: 'Welcome back!',
-        position: 'center',
-        toast: true,
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true
-    });
-</script>";
-unset($_SESSION['login_success']); // Clear the session variable
+    echo "<script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Login Successful',
+            text: 'Welcome back!',
+            position: 'center',
+            toast: true,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+    </script>";
+    unset($_SESSION['login_success']); // Clear the session variable
 }
 
+if (isset($_SESSION['logout_success'])) {
+    echo "<script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Logout Successful',
+            text: 'You have been logged out.',
+            position: 'center',
+            toast: true,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+    </script>";
+    unset($_SESSION['logout_success']); // Clear the session variable
+}
 ?>
+
 <!-- Header-->
 <header class="bg-dark py-5 d-flex align-items-center" id="main-header">
     <div class="container px-4 px-lg-5 my-5 w-100">
@@ -149,7 +153,7 @@ unset($_SESSION['login_success']); // Clear the session variable
                <hr>
                <?php include('welcome_content.html') ?>
            </div>
-           <div class="col-md-4 col-12 border-start"> <!-- Adjusted for mobile responsiveness -->
+           <div class="col-md-4 col-12 border-start">
                <h4><b>Recent Blogs</b></h4>
                <hr>
                <?php 
