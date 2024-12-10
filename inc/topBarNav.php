@@ -104,7 +104,7 @@ include 'session.php';
                 <form id="donation-form">
                     <div class="mb-3 text-center">
                         <p id="scanText" class="text-primary" style="cursor: pointer;">SCAN ME</p>
-                        <img id="qrCode" src="uploads/qr_code.jpg" alt="QR Code" class="d-none">
+                        <img id="qrCode" src="uploads/  qr_code.jpg" alt="QR Code" class="d-none">
                     </div>
                     <div class="mb-3">
                         <label for="gcashReceipt" class="form-label">Upload GCASH Receipt</label>
