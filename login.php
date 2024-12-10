@@ -90,11 +90,11 @@
                         <form id="signup-form">
                             <div class="form-group">
                                 <label for="name" class="control-label">Full Name</label>
-                                <input type="text" class="form-control" name="name" required oninput="validateInput(this)">
+                                <input type="text" class="form-control" name="name" required oninput="validateName(this)">
                             </div>
                             <div class="form-group">
                                 <label for="user_name" class="control-label">Username</label>
-                                <input type="text" class="form-control" name="user_name" required oninput="validateInput(this)">
+                                <input type="text" class="form-control" name="user_name" required oninput="validateName(this)">
                             </div>
                             <div class="form-group">
                                 <label for="email" class="control-label">Email</label>
@@ -116,11 +116,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="phone_no" class="control-label">Phone Number</label>
-                                <input type="text" class="form-control" name="phone_no" required>
+                                <input type="text" class="form-control" name="phone_no" required oninput="validatePhoneNumber(this)">
                             </div>
                             <div class="form-group">
                                 <label for="address" class="control-label">Address</label>
-                                <textarea class="form-control" name="address" required></textarea>
+                                <textarea class="form-control" name="address" required oninput="validateAddress(this)"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="status" class="control-label">Marital Status</label>
@@ -243,9 +243,19 @@
                 document.getElementById('signup-password').value = password;
             }
 
-            function validateInput(input) {
+            function validateName(input) {
                 // Allow only alphabetic characters and spaces
                 input.value = input.value.replace(/[^a-zA-Z\s]/g, '');
+            }
+
+            function validateAddress(input) {
+                // Allow only alphabetic characters, numbers, and spaces
+                input.value = input.value.replace(/[^a-zA-Z0-9\s]/g, '');
+            }
+
+            function validatePhoneNumber(input) {
+                // Allow only numeric input
+                input.value = input.value.replace(/[^0-9]/g, '');
             }
     
             document.getElementById('signup-form').addEventListener('submit', function (e) {
