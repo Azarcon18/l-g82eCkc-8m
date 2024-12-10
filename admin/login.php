@@ -1,14 +1,13 @@
 <?php require_once('../config.php'); ?>
-<!DOCTYPE html>
-<html lang="en" style="height: auto;">
-<?php require_once('inc/header.php'); ?>
 <?php $request = $_SERVER['REQUEST_URI'];
 if (substr($request, -4) == '.php') {
     $new_url = substr($request, 0, -4);
     header("Location: $new_url", true, 301);
     exit();
-}
-?>
+}?>
+<!DOCTYPE html>
+<html lang="en" style="height: auto;">
+<?php require_once('inc/header.php'); ?>
 <style>
   body {
     background-color: #343a40; /* Fallback color */
