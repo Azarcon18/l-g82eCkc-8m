@@ -1,17 +1,8 @@
-<IfModule mod_rewrite.c>
 RewriteEngine On
 
-# Redirect .php URLs to remove .php extension (e.g., /file.php -> /file)
+# If a file or directory exists, serve it directly
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)\.php$ /$1 [L,R=301]
 
-# Serve .php files when requested without the .php extension (e.g., /file -> /file.php)
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^([^\.]+)$ $1.php [L]
-
-# Route non-existent files and directories to index.php
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /index.php?page=$1 [L]
-</IfModule>
+# Otherwise, redirect to the PHP handler
+RewriteRule ^(.*)$ index.php?page=$1 [L,QSA]
