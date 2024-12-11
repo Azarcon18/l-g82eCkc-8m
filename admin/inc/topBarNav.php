@@ -217,7 +217,7 @@ $lastNotificationId = !empty($notifications) ? $notifications[0]['id'] : 0;
     }).then((result) => {
       if (result.isConfirmed) {
         // Redirect to the logout URL
-        window.location.href = "<?php echo base_url.'/classes/Login.php?f=logout' ?>";
+        window.location.href = "<?php echo base_url.'/classes/Login?f=logout' ?>";
       }
     });
   }
