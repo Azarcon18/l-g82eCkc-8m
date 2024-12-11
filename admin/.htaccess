@@ -6,11 +6,10 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$    /index.php/$2/?page=$1   [L]
 </IfModule>
 
-# Simply remove .php extension
-RewriteCond %{REQUEST_FILENAME} !-d
+RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^(.+)$ $1.php [L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)\.php$ /$1 [L,R=301]
 
-# Redirect admin/login to admin/login.php
-RewriteRule ^login$ login.php [L]
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^([^\.]+)$ $1.php [L]
