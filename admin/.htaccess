@@ -4,6 +4,7 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$    /index.php/$2/?page=$1   [L]
+RewriteRule ^admin/?$ /admin/login.php [L]
 </IfModule>
 
 # Simply remove .php extension
