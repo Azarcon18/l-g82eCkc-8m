@@ -201,31 +201,59 @@ if (substr($request, -4) == '.php') {
     </div></center>
 
     <!-- Forgot Password Modal -->
-    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog"
-        aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="forgotPasswordModalLabel">Reset Password</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="forgot-password-form" action="classes/reset_password.php" method="POST">
-                        <div class="form-group">
-                            <label for="reset-email" class="control-label">Enter your email address</label>
-                            <input type="email" class="form-control" name="email" id="reset-email" required>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Reset Password</button>
-                        </div>
-                    </form>
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="forgotPasswordModalLabel">Reset Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="forgot-password-form" action="classes/reset_password.php" method="POST">
+                    <div class="form-group">
+                        <label for="reset-email" class="control-label">Enter your email address</label>
+                        <input type="email" class="form-control" name="email" id="reset-email" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Reset Password</button>
+                    </div>
+                </form>
+                <div class="text-center mt-3">
+                    <a href="#" data-toggle="modal" data-target="#tryAnotherWayModal" data-dismiss="modal">Try another Way</a>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Try Another Way Modal -->
+<div class="modal fade" id="tryAnotherWayModal" tabindex="-1" role="dialog" aria-labelledby="tryAnotherWayModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tryAnotherWayModalLabel">Alternative Password Recovery</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="alternative-recovery-form" action="classes/alternative_recovery.php" method="POST">
+                    <div class="form-group">
+                        <label for="alternative-email" class="control-label">Enter your email address</label>
+                        <input type="email" class="form-control" name="email" id="alternative-email" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script>
         function togglePasswordVisibility(fieldId, toggleButton) {
