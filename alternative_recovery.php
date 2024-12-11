@@ -17,9 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Generate a 5-digit random code
         $code = random_int(10000, 99999);
 
-        // Update the database with the code
-        $stmt = $pdo->prepare("UPDATE registered_users SET code = :code WHERE email = :email");
-        $stmt->execute(['code' => $code, 'email' => $email]);
+        // Generate a unique token
+        $token = bin2hex(random_bytes(50));
+
+        // Update the database with the code and token
+        $stmt = $pdo->prepare("UPDATE registered_users SET code = :code, token = :token WHERE email = :email");
+        $stmt->execute(['code' => $code, 'token' => $token, 'email' => $email]);
 
         // Send the code via email using PHPMailer
         $mail = new PHPMailer(true);
@@ -35,16 +38,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->Port = 587;
 
             //Recipients
-            $mail->setFrom('jagdonjohncarlo0714@gmail.com', 'ICP MADRIDEJOS');
+            $mail->setFrom('your-email@gmail.com', 'Your Name');
             $mail->addAddress($email);
 
             // Content
             $mail->isHTML(true);
-            $mail->Subject = 'Verification Code';
-            $mail->Body    = "Your verification code is: <strong>$code</strong>";
+            $mail->Subject = 'Verification Code and Token';
+            $mail->Body    = "Your verification code is: <strong>$code</strong><br>Your token is: <strong>$token</strong>";
 
             $mail->send();
-            echo 'A verification code has been sent to your email address.';
+            echo 'A verification code and token have been sent to your email address.';
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
