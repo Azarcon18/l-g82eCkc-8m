@@ -1,12 +1,15 @@
-RewriteEngine On
+<IfModule mod_rewrite.c>
 
-# Ensure that we only remove .php from URLs specifically in the admin section or other specific paths.
-# This rule ensures that .php is removed from URLs like /login.php to /login
-RewriteCond %{THE_REQUEST} /([^\s]+)\.php [NC]
-RewriteRule ^ /%1 [R=301,L]
-
-# Internally rewrite URLs without .php to the actual PHP file
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$    /index.php/$2/?page=$1   [L]
+</IfModule>
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)\.php$ /$1 [L,R=301]
+
 RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^admin/(.*)$ /admin/$1.php [L]  # This line ensures that admin paths are handled correctly
-RewriteRule ^(.*)$ $1.php [L]
+RewriteRule ^([^\.]+)$ $1.php [L]
