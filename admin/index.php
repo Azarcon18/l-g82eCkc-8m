@@ -1,3 +1,7 @@
+Share
+
+
+You said:
 <?php require_once('../config.php'); ?>
  <!DOCTYPE html>
 <html lang="en" class="" style="height: auto;">
@@ -25,19 +29,6 @@
 
               }
             ?>
-            <?php 
-// Simple page inclusion logic
-$page = isset($_GET['page']) ? $_GET['page'] : 'home';
-$filePath = $page . '.php'; // Append .php to the page name
-
-// Check if the file exists
-if (file_exists($filePath)) {
-    include $filePath; // Include the file
-} else {
-    echo "Page not found"; // If the file does not exist
-}
-?>
-
           </div>
         </section>
         <!-- /.content -->

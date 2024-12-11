@@ -1,15 +1,18 @@
-<IfModule mod_rewrite.c>
+<?php 
+$page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
-RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$    /index.php/$2/?page=$1   [L]
-</IfModule>
+// Add .php if not present
+if (!str_ends_with($page, '.php') && !is_dir($page)) {
+    $page .= '.php';
+}
 
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)\.php$ /$1 [L,R=301]
-
-RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^([^\.]+)$ $1.php [L]
+if (!file_exists($page) && !is_dir($page)) {
+    include '404.html';
+} else {
+    if (is_dir($page)) {
+        include $page . '/index.php';
+    } else {
+        include $page;
+    }
+}
+?>
