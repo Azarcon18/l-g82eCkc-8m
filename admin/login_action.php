@@ -17,14 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['user'] = $username;
         // Remove start_loader() call to stop loading
         echo '<script>
-            window.location.href = "dashboard.php";
+            window.location.href = "dashboard";
         </script>';
         exit();
     } else {
         // Failed login
         echo '<script>
             alert("Invalid username or password");
-            window.location.href = "login.php";
+            window.location.href = "login";
         </script>';
         exit();
     }
