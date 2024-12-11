@@ -103,7 +103,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="donation-form">
+                    <form id="donation-form" action="donate.php" method="POST">
                         <div class="mb-3 text-center">
                             <p id="scanText" class="text-primary" style="cursor: pointer;">SCAN ME</p>
                             <img id="qrCode" src="uploads/462553492_1073843374233841_8974980054253416195_n.jpg" alt="QR Code" class="d-none">
@@ -115,23 +115,23 @@
                         </div>
                         <div class="mb-3">
                             <label for="donorName" class="form-label">Donor Name</label>
-                            <input type="text" class="form-control" id="donorName" placeholder="Enter your name" required>
+                            <input type="text" class="form-control" id="donorName" name="name" placeholder="Enter your name" required>
                         </div>
                         <div class="mb-3">
                             <label for="donorEmail" class="form-label">Donor Email</label>
-                            <input type="email" class="form-control" id="donorEmail" placeholder="Enter your email" required>
+                            <input type="email" class="form-control" id="donorEmail" name="email" placeholder="Enter your email" required>
                         </div>
                         <div class="mb-3">
                             <label for="donationAmount" class="form-label">Donation Amount</label>
-                            <input type="number" class="form-control" id="donationAmount" placeholder="Enter your donation amount" readonly>
+                            <input type="number" class="form-control" id="donationAmount" name="amount" placeholder="Enter your donation amount" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="refNo" class="form-label">Ref No.</label>
-                            <input type="text" class="form-control" id="refNo" placeholder="Enter your donation reference number" readonly>
+                            <input type="text" class="form-control" id="refNo" name="ref_no" placeholder="Enter your donation reference number" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="donorMessage" class="form-label">Message (optional)</label>
-                            <textarea class="form-control" id="donorMessage" rows="3" placeholder="Enter your message"></textarea>
+                            <textarea class="form-control" id="donorMessage" name="message" rows="3" placeholder="Enter your message"></textarea>
                         </div>
                     </form>
                 </div>
@@ -163,6 +163,7 @@
             const gcashReceipt = document.getElementById('gcashReceipt');
             const scanningIndicator = document.getElementById('scanningIndicator');
             const donateBtn = document.getElementById('donate-btn');
+            const donationForm = document.getElementById('donation-form');
             let isScanning = false;
 
             // Toggle navbar on mobile
@@ -182,7 +183,7 @@
 
             // Reset form when modal is closed
             document.getElementById('donationModal').addEventListener('hidden.bs.modal', function () {
-                document.getElementById('donation-form').reset();
+                donationForm.reset();
                 scanningIndicator.classList.add('d-none');
                 isScanning = false;
             });
@@ -222,9 +223,31 @@
             }
 
             // Handle donation button click
-            donateBtn.addEventListener('click', function () {
-                Swal.fire('Donation process initiated!');
-                donationModal.hide();
+            donateBtn.addEventListener('click', function (e) {
+                e.preventDefault(); // Prevent default form submission
+
+                // Create a FormData object from the form
+                const formData = new FormData(donationForm);
+
+                // Send the form data using fetch API
+                fetch('donate.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        Swal.fire('Success', data.message, 'success');
+                        donationModal.hide();
+                        donationForm.reset();
+                    } else {
+                        Swal.fire('Error', data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire('Error', 'An error occurred while processing your donation.', 'error');
+                });
             });
 
             // Toggle user dropdown menu
