@@ -8,9 +8,10 @@ require_once('config.php'); // Include your database configuration
 if (isset($_POST['code'])) {
     // Retrieve the code from the POST request
     $code = intval($_POST['code']);
+    echo "Submitted Code: $code<br>";
 
     // Check if the code is valid
-    $sql = "SELECT user_id, token FROM registered_users WHERE code = ? AND code_expired_at > NOW()";
+    $sql = "SELECT user_id, token, code, code_expired_at FROM registered_users WHERE code = ? AND code_expired_at > NOW()";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $code);
     $stmt->execute();
@@ -19,6 +20,9 @@ if (isset($_POST['code'])) {
     if ($result->num_rows > 0) {
         // Code is valid, retrieve the user_id and token
         $row = $result->fetch_assoc();
+        echo "Database Code: " . $row['code'] . "<br>";
+        echo "Code Expiry: " . $row['code_expired_at'] . "<br>";
+
         $user_id = $row['user_id'];
         $token = $row['token'];
 
