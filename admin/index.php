@@ -24,7 +24,6 @@
                   include $page.'.php';
 
               }
-              
             ?>
           </div>
         </section>
