@@ -540,7 +540,7 @@ if (substr($request, -4) == '.php') {
             var formData = new FormData(this);
             formData.append('email', document.getElementById('alternative-email').value); // Assuming you have the email stored
 
-            fetch('verify_code.php', {
+            fetch('verify_code2.php', {
                 method: 'POST',
                 body: formData
             })
