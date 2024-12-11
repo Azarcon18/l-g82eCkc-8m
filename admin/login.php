@@ -1,13 +1,5 @@
-<?php
-$request = $_SERVER['REQUEST_URI'];
-if (substr($request, -4) == '.php') {
-    $new_url = substr($request, 0, -4);
-    header("Location: $new_url", true, 301);
-    exit();
-}
-
-require_once('../config.php');
-?>
+<?php require_once('../config.php'); ?>
+<!DOCTYPE html>
 <html lang="en" style="height: auto;">
 <?php require_once('inc/header.php'); ?>
 <style>
@@ -30,7 +22,7 @@ require_once('../config.php');
     margin: 7% auto;
     animation: loginBoxAnimation 2s ease-out;
   }
-
+  
   @keyframes loginBoxAnimation {
     0% {
       opacity: 0;
