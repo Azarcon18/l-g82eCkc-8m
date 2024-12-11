@@ -11,7 +11,7 @@ if (isset($_POST['code'])) {
     echo "Submitted Code: $code<br>";
 
     // Check if the code is valid
-    $sql = "SELECT user_id, token, code, code_expired_at FROM registered_users WHERE code = ? AND code_expired_at > NOW()";
+    $sql = "SELECT user_id, token, code_expired_at FROM registered_users WHERE code = ? AND code_expired_at > NOW()";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $code);
     $stmt->execute();
