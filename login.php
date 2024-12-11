@@ -287,16 +287,12 @@ if (substr($request, -4) == '.php') {
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="code-verification-form" action="classes/verify_code2.php" method="POST">
+                    <form id="code-verification-form">
                         <div class="form-group">
                             <label for="verification-code" class="control-label">Verification Code</label>
-                            <input type="text" class="form-control" name="verification_code" id="verification-code"
-                                required>
+                            <input type="text" class="form-control" name="code" id="verification-code" required>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Verify</button>
-                        </div>
+                        <button type="submit" class="btn btn-primary">Verify</button>
                     </form>
                 </div>
             </div>
@@ -539,67 +535,67 @@ if (substr($request, -4) == '.php') {
 
 
         document.getElementById('code-verification-form').addEventListener('submit', function (e) {
-    e.preventDefault();
+            e.preventDefault();
 
-    var formData = new FormData(this);
+            var formData = new FormData(this);
 
-    Swal.fire({
-        html: 'Please wait while we verify your code',
-        timerProgressBar: true,
-        didOpen: () => {
-            Swal.showLoading();
-        },
-        position: 'center',
-        toast: true,
-        showConfirmButton: false
-    });
-
-    fetch('verify_code2.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        Swal.close();
-        if (data.includes("Account verified and code cleared successfully!")) {
             Swal.fire({
-                icon: 'success',
-                text: 'Verification successful! Redirecting...',
+                html: 'Please wait while we verify your code',
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
                 position: 'center',
                 toast: true,
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
-            }).then(() => {
-                // Redirect to the reset password page
-                window.location.href = `https://icpmadridejos.com/reset-password.php?token=${data.token}`;
+                showConfirmButton: false
             });
-        } else {
-            Swal.fire({
-                icon: 'error',
-                text: data,
-                position: 'center',
-                toast: true,
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
-            });
-        }
-    })
-    .catch(error => {
-        Swal.close();
-        console.error('Error:', error);
-        Swal.fire({
-            icon: 'error',
-            text: 'An unexpected error occurred. Please try again.',
-            position: 'center',
-            toast: true,
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true
+
+            fetch('verify_code2.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    Swal.close();
+                    if (data.includes("Account verified and code cleared successfully!")) {
+                        Swal.fire({
+                            icon: 'success',
+                            text: 'Verification successful! Redirecting...',
+                            position: 'center',
+                            toast: true,
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true
+                        }).then(() => {
+                            // Redirect to the reset password page
+                            window.location.href = `https://icpmadridejos.com/reset-password.php?token=${data.token}`;
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            text: data,
+                            position: 'center',
+                            toast: true,
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.close();
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        text: 'An unexpected error occurred. Please try again.',
+                        position: 'center',
+                        toast: true,
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                    });
+                });
         });
-    });
-});
         grecaptcha.ready(function () {
             grecaptcha.execute('6LfCPpMqAAAAANJD3dBADWW_bQgoZa5_SXfnrlvK', { action: 'submit' }).then(function (token) {
                 document.getElementById('g-recaptcha-response').value = token;
