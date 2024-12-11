@@ -13,4 +13,4 @@ RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L]
 
 # Redirect admin/login to admin/login.php
-RewriteRule ^login$ login.php [L]
+RewriteRule ^login$ login [L]
