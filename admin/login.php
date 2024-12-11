@@ -1,4 +1,12 @@
 <?php require_once('../config.php');
+$request = $_SERVER['REQUEST_URI'];
+
+// Check if the request ends with .php and is not the admin login page
+if (substr($request, -4) == '.php' && !preg_match('/login\.php$/', $request)) {
+    $new_url = substr($request, 0, -4);
+    header("Location: $new_url", true, 301);
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" style="height: auto;">
