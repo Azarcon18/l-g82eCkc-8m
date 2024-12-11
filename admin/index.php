@@ -1,7 +1,3 @@
-Share
-
-
-You said:
 <?php require_once('../config.php'); ?>
  <!DOCTYPE html>
 <html lang="en" class="" style="height: auto;">
@@ -89,4 +85,4 @@ You said:
       <!-- /.content-wrapper -->
       <?php require_once('inc/footer.php') ?>
   </body>
-</html>
+</html> 
