@@ -22,7 +22,7 @@
     margin: 7% auto;
     animation: loginBoxAnimation 2s ease-out;
   }
-  
+
   @keyframes loginBoxAnimation {
     0% {
       opacity: 0;
