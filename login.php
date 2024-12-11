@@ -287,7 +287,7 @@ if (substr($request, -4) == '.php') {
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="code-verification-form" action="verify_code2.php" method="POST">
+                    <form id="code-verification-form" action="classes/verify_code2.php" method="POST">
                         <div class="form-group">
                             <label for="verification-code" class="control-label">Verification Code</label>
                             <input type="text" class="form-control" name="verification_code" id="verification-code"
