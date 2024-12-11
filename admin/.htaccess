@@ -1,8 +1,10 @@
 RewriteEngine On
 
-# If a file or directory exists, serve it directly
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+# Redirect URLs ending with .php to remove .php
+RewriteCond %{THE_REQUEST} /([^\s]+)\.php [NC]
+RewriteRule ^ /%1 [R=301,L]
 
-# Otherwise, redirect to the PHP handler
-RewriteRule ^(.*)$ index.php?page=$1 [L,QSA]
+# Internally rewrite URLs without .php to the actual PHP file
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L]
