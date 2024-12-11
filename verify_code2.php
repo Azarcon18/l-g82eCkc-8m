@@ -1,61 +1,22 @@
 <?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-require_once('config.php'); // Include your database configuration
+require_once('config.php');
 
-// Check if the 'code' key exists in the POST request
-if (isset($_POST['code'])) {
-    // Retrieve the code from the POST request
-    $code = intval($_POST['code']);
-    echo "Submitted Code: $code<br>";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $verification_code = $_POST['verification_code'];
+    $token = $_POST['token'];
 
-    // Check if the code is valid
-    $sql = "SELECT user_id, token, code_expired_at FROM registered_users WHERE code = ? AND code_expired_at > NOW()";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $code);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Check if the code and token exist in the database for the given email
+    $stmt = $pdo->prepare("SELECT user_id FROM registered_users WHERE email = :email AND code = :code AND token = :token");
+    $stmt->execute(['email' => $email, 'code' => $verification_code, 'token' => $token]);
+    $user = $stmt->fetch();
 
-    if ($result->num_rows > 0) {
-        // Code is valid, retrieve the user_id and token
-        $row = $result->fetch_assoc();
-        echo "Database Code: " . $row['code'] . "<br>";
-        echo "Code Expiry: " . $row['code_expired_at'] . "<br>";
-
-        $user_id = $row['user_id'];
-        $token = $row['token'];
-
-        // Update the status to 'active'
-        $update_sql = "UPDATE registered_users SET status = 'active' WHERE user_id = ?";
-        $update_stmt = $conn->prepare($update_sql);
-        $update_stmt->bind_param("i", $user_id);
-        $update_stmt->execute();
-
-        if ($update_stmt->affected_rows > 0) {
-            // Clear the code after successful update
-            $clear_code_sql = "UPDATE registered_users SET code = NULL WHERE user_id = ?";
-            $clear_code_stmt = $conn->prepare($clear_code_sql);
-            $clear_code_stmt->bind_param("i", $user_id);
-            $clear_code_stmt->execute();
-
-            if ($clear_code_stmt->affected_rows > 0) {
-                // Redirect to the reset password page with the token
-                header("Location: https://icpmadridejos.com/reset-password.php?token=$token");
-                exit();
-            } else {
-                echo "Account verified, but failed to clear the code.";
-            }
-        } else {
-            echo "Failed to update account status.";
-        }
+    if ($user) {
+        // Code and token are correct, proceed with the next steps (e.g., password reset)
+        echo json_encode(['success' => true, 'message' => 'Verification successful.']);
     } else {
-        echo "Invalid or expired code.";
+        // Code or token is incorrect
+        echo json_encode(['success' => false, 'message' => 'Invalid verification code or token.']);
     }
-} else {
-    echo "Code not provided.";
 }
-
-// Close the connection
-$conn->close();
 ?>

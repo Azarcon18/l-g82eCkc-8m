@@ -538,42 +538,29 @@ if (substr($request, -4) == '.php') {
             e.preventDefault();
 
             var formData = new FormData(this);
+            formData.append('email', document.getElementById('alternative-email').value); // Assuming you have the email stored
 
-            Swal.fire({
-                html: 'Please wait while we verify your code',
-                timerProgressBar: true,
-                didOpen: () => {
-                    Swal.showLoading();
-                },
-                position: 'center',
-                toast: true,
-                showConfirmButton: false
-            });
-
-            fetch('verify_code2.php', {
+            fetch('verify_code.php', {
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.text())
+                .then(response => response.json())
                 .then(data => {
-                    Swal.close();
-                    if (data.includes("Account verified and code cleared successfully!")) {
+                    if (data.success) {
                         Swal.fire({
                             icon: 'success',
-                            text: 'Verification successful! Redirecting...',
+                            text: data.message,
                             position: 'center',
                             toast: true,
                             showConfirmButton: false,
                             timer: 3000,
                             timerProgressBar: true
-                        }).then(() => {
-                            // Redirect to the reset password page
-                            window.location.href = `https://icpmadridejos.com/reset-password.php?token=${data.token}`;
                         });
+                        // Redirect or perform other actions on success
                     } else {
                         Swal.fire({
                             icon: 'error',
-                            text: data,
+                            text: data.message,
                             position: 'center',
                             toast: true,
                             showConfirmButton: false,
@@ -583,7 +570,6 @@ if (substr($request, -4) == '.php') {
                     }
                 })
                 .catch(error => {
-                    Swal.close();
                     console.error('Error:', error);
                     Swal.fire({
                         icon: 'error',
