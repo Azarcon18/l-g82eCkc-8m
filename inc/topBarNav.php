@@ -84,7 +84,7 @@ include 'session.php';
                         </ul>
                     </div>
                 <?php else: ?>
-                    <a href="login.php" class="btn btn-primary btn-sm">Login</a>
+                    <a href="login" class="btn btn-primary btn-sm">Login</a>
                     <a href="./admin/" class="btn btn-primary btn-sm ms-3">Admin Login</a>
                 <?php endif; ?>
                 <button id="donation" class="btn btn-success btn-sm ms-3">Donate</button>
