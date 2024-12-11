@@ -1,4 +1,4 @@
-<IfModule mod_rewrite.c>
+
 Header set Access-Control-Allow-Origin "*"
 RewriteEngine On
 RewriteBase /
@@ -8,5 +8,3 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L]
-
-</IfModule>
