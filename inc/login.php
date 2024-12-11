@@ -9,13 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $request = $_SERVER['REQUEST_URI'];
-if (substr($request, -4) == '.php') {
-    $new_url = substr($request, 0, -4);
-    header("Location: $new_url", true, 301);
-    exit();
-}
-
     // Validate the user credentials
     $query = $conn->prepare("SELECT * FROM registered_users WHERE email = :email");
     $query->bindParam(':email', $email, PDO::PARAM_STR);
