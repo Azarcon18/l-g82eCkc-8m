@@ -1,4 +1,4 @@
-<?php require_once('../config.php');
+<?php   
 $request = $_SERVER['REQUEST_URI'];
 
 // Check if the request ends with .php and is not the admin login page
