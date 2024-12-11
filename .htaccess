@@ -3,9 +3,10 @@ Header set Access-Control-Allow-Origin "*"
 RewriteEngine On
 RewriteBase /
 
-RewriteEngine On
+# Simply remove .php extension
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ $1.php [L]
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L]
 
 </IfModule>
