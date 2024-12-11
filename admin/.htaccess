@@ -1,15 +1,17 @@
 <IfModule mod_rewrite.c>
-
-RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$    /index.php/$2/?page=$1   [L]
-</IfModule>
-
 RewriteEngine On
+
+# Redirect requests with .php to the version without .php (SEO-friendly)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)\.php$ /$1 [L,R=301]
 
+# Serve .php files for requests without .php (internal routing)
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^([^\.]+)$ $1.php [L]
+
+# Route non-existent files/directories to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php?page=$1 [L]
+</IfModule>
