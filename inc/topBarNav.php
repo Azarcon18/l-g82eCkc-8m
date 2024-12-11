@@ -1,11 +1,3 @@
-<?php 
-$request = $_SERVER['REQUEST_URI'];
-if (substr($request, -4) == '.php') {
-    $new_url = substr($request, 0, -4);
-    header("Location: $new_url", true, 301);
-    exit();
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,7 +85,7 @@ include 'session.php';
                     </div>
                 <?php else: ?>
                     <a href="login" class="btn btn-primary btn-sm">Login</a>
-                    <a href="../admin/login" class="btn btn-primary btn-sm ms-3">Admin Login</a>
+                    <a href="./admin/" class="btn btn-primary btn-sm ms-3">Admin Login</a>
                 <?php endif; ?>
                 <button id="donation" class="btn btn-success btn-sm ms-3">Donate</button>
             </div>
