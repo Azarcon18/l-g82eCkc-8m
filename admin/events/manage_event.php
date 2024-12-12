@@ -43,6 +43,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 	              <label class="custom-file-label" for="customFile">Choose file</label>
 	            </div>
 			</div>
+			
 			<div class="form-group d-flex justify-content-center">
 				<img align="center" src="<?php echo validate_image(isset($img_path) ? $img_path : '') ?>" alt="" id="cimg" class="img-fluid img-thumbnail">
 			</div>
