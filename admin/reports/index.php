@@ -52,7 +52,7 @@ if ($_settings->chk_flashdata('success')): ?>
 
 <div class="card card-outline card-primary">
     <div class="card-header">
-        <h3 class="card-title">Dashboard</h3>
+        <h3 class="card-title">Reports</h3>
 
     </div>
     <div class="card-body">
