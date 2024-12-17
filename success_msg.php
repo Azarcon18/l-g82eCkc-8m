@@ -4,37 +4,40 @@
     }
     .success-container {
         text-align: center;
-        padding: 40px;
-        background: #f9f9f9;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        max-width: 500px;
+        padding: 50px;
+        background: linear-gradient(135deg, #e3ffe7, #d9e7ff);
+        border-radius: 10px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        max-width: 600px;
         margin: auto;
     }
     .success-message {
-        font-size: 18px;
-        color: #555;
-        margin-top: 10px;
+        font-size: 20px;
+        color: #333;
+        margin-top: 15px;
+        line-height: 1.6;
     }
     .close-button-container {
         text-align: center;
-        margin-top: 20px;
+        margin-top: 25px;
     }
     .text-success {
-        color: #28a745;
-        font-size: 24px;
+        color: #4caf50;
+        font-size: 28px;
         font-weight: bold;
     }
     .btn-flat {
-        background: #e7e7e7;
+        background: #4caf50;
+        color: white;
         border: none;
-        padding: 8px 16px;
-        border-radius: 4px;
-        font-size: 14px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
         cursor: pointer;
+        transition: background 0.3s ease;
     }
     .btn-flat:hover {
-        background:rgb(0, 124, 225);
+        background: #45a049;
     }
 </style>
 
