@@ -34,7 +34,7 @@
         cursor: pointer;
     }
     .btn-flat:hover {
-        background: #d6d6d6;
+        background:rgb(0, 124, 225);
     }
 </style>
 
