@@ -60,10 +60,10 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="date_of_death" class="control-label">Date of Death</label>
-                        <input type="date" name="date_of_death" id="date_of_death" class="form-control rounded-0"
-                            required>
-                    </div>
+    <label for="date_of_death" class="control-label">Date of Death</label>
+    <input type="date" name="date_of_death" id="date_of_death" class="form-control rounded-0" 
+           max="<?php echo date('Y-m-d', strtotime('-1 day')); ?>" required>
+</div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
