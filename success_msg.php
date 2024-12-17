@@ -12,6 +12,6 @@
     </div>
     <div class="container">
     <h4>Success!</h4>
-    <p>Your baptism appointment has been successfully scheduled.</p>
+    <p>Your Request Has Been Recorded.</p>
 </div>
 </div>
