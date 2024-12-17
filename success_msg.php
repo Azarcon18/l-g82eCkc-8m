@@ -7,22 +7,26 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .modal-backdrop {
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 2000;
-            width: 100vw;
-            height: 100vh;
-            background-color: #000;
-            opacity: 0.5;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1050;
+        }
+        .modal-overlay .modal-dialog {
+            z-index: 1060;
         }
     </style>
 </head>
 <body>
-    <!-- Modal -->
-    <div class="modal fade show" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true" style="display: block;">
-        <div class="modal-backdrop"></div>
+    <!-- Custom Modal Wrapper -->
+    <div class="modal-overlay" id="modalOverlay">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body text-center p-5">
@@ -35,7 +39,7 @@
                         Your Request Has Been Recorded. 
                         Please wait for confirmation from the management.
                     </p>
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="closeModalBtn">Close</button>
                 </div>
             </div>
         </div>
@@ -46,23 +50,24 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const modal = document.getElementById('successModal');
-            
+            const modalOverlay = document.getElementById('modalOverlay');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+
             // Auto-close after 3 seconds
             setTimeout(() => {
-                // Use Bootstrap's modal method to hide
-                var bsModal = new bootstrap.Modal(modal);
-                bsModal.hide();
+                modalOverlay.style.display = 'none';
             }, 3000);
 
-            // Ensure close button works
-            const closeButtons = modal.querySelectorAll('[data-bs-dismiss="modal"]');
-            closeButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // Use Bootstrap's modal method to hide
-                    var bsModal = new bootstrap.Modal(modal);
-                    bsModal.hide();
-                });
+            // Close modal when button is clicked
+            closeModalBtn.addEventListener('click', function() {
+                modalOverlay.style.display = 'none';
+            });
+
+            // Optional: Close modal if overlay background is clicked
+            modalOverlay.addEventListener('click', function(event) {
+                if (event.target === modalOverlay) {
+                    modalOverlay.style.display = 'none';
+                }
             });
         });
     </script>
