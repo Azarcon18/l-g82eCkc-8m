@@ -26,7 +26,7 @@
                         <label for="facebook" class="control-label">Facebook</label>
                         <input type="text" name="facebook" id="facebook" class="form-control rounded-0" required>
                     </div>
-                    <div class="form-group">
+                   <div class="form-group">
     <label for="schedule" class="control-label">Desired Schedule</label>
     <input type="datetime-local" name="schedule" id="schedule" class="form-control rounded-0" required min="">
 </div>
@@ -167,14 +167,5 @@
                 }
             });
         });
-    });
-</script>
-<script>
-    // Set the minimum date to the current date and time
-    document.addEventListener('DOMContentLoaded', () => {
-        const scheduleInput = document.getElementById('schedule');
-        const now = new Date();
-        const formattedNow = now.toISOString().slice(0, 16); // Format as yyyy-MM-ddTHH:mm
-        scheduleInput.min = formattedNow;
     });
 </script>
