@@ -47,107 +47,95 @@ if ($id) {
     if ($appointment) {
         // Display the appointment data using the modified template
         ?>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Death Certificate</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #f0f0f0;
+                }
+                .certificate {
+                    width: 210mm;
+                    height: 297mm;
+                    margin: 0 auto;
+                    background-color: white;
+                    padding: 20mm;
+                    box-sizing: border-box;
+                }
+                header {
+                    text-align: center;
+                    margin-bottom: 10mm;
+                }
+                h1 {
+                    font-size: 24pt;
+                    color: #333;
+                    margin: 0;
+                }
+                .details {
+                    font-size: 14pt;
+                    line-height: 3;
+                    text-align: justify;
+                }
+                .signatures {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 20mm;
+                }
+                .signature {
+                    text-align: center;
+                }
+                @media print {
+                    body {
+                        background-color: white;
+                    }
+                    .certificate {
+                        box-shadow: none;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="certificate">
+                <header>
+                    <h1><b>DEATH CERTIFICATE</b></h1>
+                </header>
+                
+                <section class="details">
+                    <p>TO WHOM IT MAY CONCERN:</p>
+                    
+                    <p>This is to clarify that <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['death_person_fullname']); ?></span>, <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['gender']); ?></span> died last <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['date_of_death']); ?></span>. Born on <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['birthdate']); ?></span>, died at <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['resident']); ?></span>. <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['civil_status']); ?></span>, resident of <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['resident']); ?></span>, <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['nationality']); ?></span>. Entrepreneur of parents <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['mother']); ?></span> and <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['father']); ?></span>, <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['nationality']); ?></span>. <br> This certification is issued to <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['fullname']); ?></span> upon his/her request for whatever legal purpose it may serve.</p>
+                    <?php
+    // Set the timezone to Cebu, Philippines
+    date_default_timezone_set('Asia/Manila');
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate of Death</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-        }
-        form {
-            background: #fff;
-            padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 2px 2px 12px #aaa;
-            width: 80%;
-            margin: auto;
-        }
-        h2 {
-            text-align: center;
-        }
-        label {
-            display: inline-block;
-            width: 25%;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        input, select, textarea {
-            width: 70%;
-            padding: 5px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .section-header {
-            margin-top: 20px;
-            text-decoration: underline;
-            font-weight: bold;
-        }
-        .btn {
-            display: block;
-            width: 20%;
-            margin: auto;
-            padding: 10px;
-            text-align: center;
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <h2>Certificate of Death</h2>
-    <form method="POST" action="certificate_of_death.php">
-        <div class="section-header">Personal Information</div>
-        <label>Name:</label><input type="text" name="name" required><br>
-        <label>Sex:</label>
-        <select name="sex" required>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-        </select><br>
-        <label>Religion:</label><input type="text" name="religion"><br>
-        <label>Age:</label><input type="number" name="age" required><br>
+    // Get the current date
+    $current_date = date('F j, Y');
 
-        <div class="section-header">Death Details</div>
-        <label>Place of Death:</label><input type="text" name="place_of_death" required><br>
-        <label>Date of Death:</label><input type="date" name="date_of_death" required><br>
-        <label>Cause of Death:</label><textarea name="cause_of_death" rows="3"></textarea><br>
+    // Output the date within the paragraph
+    echo "<p>Given this of $current_date at Immaculate Conception Parish, Poblacion Madridejos Cebu, Burgos St.</p>";
+?>
 
-        <div class="section-header">Residence</div>
-        <label>Residence Address:</label><input type="text" name="residence" required><br>
+                </section>
 
-        <div class="section-header">Medical Certificate</div>
-        <label>Attending Physician:</label><input type="text" name="physician"><br>
-        <label>Immediate Cause of Death:</label><input type="text" name="immediate_cause"><br>
-        <label>Interval Between Onset and Death:</label><input type="text" name="death_interval"><br>
-
-        <div class="section-header">Attendant</div>
-        <label>Was Attended? </label>
-        <select name="attended">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select><br>
-
-        <div class="section-header">Other Information</div>
-        <label>Burial/Cremation Permit:</label><input type="text" name="permit_no"><br>
-        <label>Name of Cemetery/Crematory:</label><input type="text" name="cemetery_name"><br>
-        <label>Signature of Informant:</label><input type="text" name="informant_signature"><br>
-
-        <button type="submit" class="btn">Submit</button>
-    </form>
-</body>
-</html>
+                <section class="signatures">
+                    <div class="signature">
+                        <p>_________________________</p>
+                        <p>Signature of Applicant</p>
+                        <p>Date: ___________</p>
+                    </div>
+                    <div class="signature">
+                        <p>_________________________</p>
+                        <p>Signature of Approver</p>
+                        <p>Date: ___________</p>
+                    </div>
+                </section>
+            </div>
 
             <script>
                 // Automatically print the page when it loads
