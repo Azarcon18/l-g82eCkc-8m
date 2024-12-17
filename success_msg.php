@@ -53,21 +53,19 @@
             const modalOverlay = document.getElementById('modalOverlay');
             const closeModalBtn = document.getElementById('closeModalBtn');
 
-            // Auto-close after 3 seconds
+            // Function to redirect
+            function redirectToSchedule() {
+                window.location.href = 'https://icpmadridejos.com/?p=schedule';
+            }
+
+            // Auto-close and redirect after 3 seconds
             setTimeout(() => {
-                modalOverlay.style.display = 'none';
+                redirectToSchedule();
             }, 3000);
 
-            // Close modal when button is clicked
+            // Close modal and redirect when button is clicked
             closeModalBtn.addEventListener('click', function() {
-                modalOverlay.style.display = 'none';
-            });
-
-            // Optional: Close modal if overlay background is clicked
-            modalOverlay.addEventListener('click', function(event) {
-                if (event.target === modalOverlay) {
-                    modalOverlay.style.display = 'none';
-                }
+                redirectToSchedule();
             });
         });
     </script>
