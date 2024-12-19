@@ -96,7 +96,7 @@ if ($_settings->chk_flashdata('success')): ?>
                             </td>
                             <td>
                                 <div class="card-tools">
-                                    <a href="?page=Certificate/print_report&id=<?php echo $row['id']; ?>&type=Appointment"
+                                    <a href="?page=Certificate/print_burial&id=<?php echo $row['id']; ?>&type=Appointment"
                                         class="btn btn-flat btn-primary" target="_self">
                                         <span class="fas fa-print"></span> Print
                                     </a>
