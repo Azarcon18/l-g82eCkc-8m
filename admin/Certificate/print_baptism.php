@@ -128,7 +128,7 @@ if ($id) {
 </head>
 <body>
     <div class="certificate">
-    <img src="uploads/mary.jpg" alt="Parish Logo" class="logo">
+    <img src="mary.jpg" alt="Parish Logo" class="logo">
         <div class="header">
             <h1>Immaculate Conception Parish</h1>
             <p>Madridejos, Cebu</p>
