@@ -73,9 +73,9 @@ if ($id) {
         .logo {
             position: absolute;
             top: 20px;
-            left: 20px;
-            width: 60px;
-            height: 60px;
+            left: 30px;
+            width: 100px;
+            height: 100px;
         }
         h1 {
             color: #333;
