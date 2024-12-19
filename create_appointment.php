@@ -5,6 +5,7 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-md-6">
+                    <!-- Existing fields -->
                     <div class="form-group">
                         <label for="fullname" class="control-label">Full Name</label>
                         <input type="text" name="fullname" id="fullname" class="form-control rounded-0" required>
@@ -26,10 +27,11 @@
                         <label for="facebook" class="control-label">Facebook</label>
                         <input type="text" name="facebook" id="facebook" class="form-control rounded-0" required>
                     </div>
-                   <div class="form-group">
-    <label for="schedule" class="control-label">Desired Schedule</label>
-    <input type="datetime-local" name="schedule" id="schedule" class="form-control rounded-0" required min="">
-</div>
+                    <div class="form-group">
+                        <label for="schedule" class="control-label">Desired Schedule</label>
+                        <input type="datetime-local" name="schedule" id="schedule" class="form-control rounded-0"
+                            required min="">
+                    </div>
                     <div class="form-group">
                         <label for="remarks" class="control-label">Remarks</label>
                         <textarea name="remarks" id="remarks" class="form-control rounded-0" required></textarea>
@@ -59,10 +61,26 @@
                         </select>
                     </div>
                     <div class="form-group">
-    <label for="date_of_death" class="control-label">Date of Death</label>
-    <input type="date" name="date_of_death" id="date_of_death" class="form-control rounded-0" 
-           max="<?php echo date('Y-m-d', strtotime('0 day')); ?>" required>
-</div>
+                        <label for="date_of_death" class="control-label">Date of Death</label>
+                        <input type="date" name="date_of_death" id="date_of_death" class="form-control rounded-0"
+                            max="<?php echo date('Y-m-d', strtotime('0 day')); ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registry_no" class="control-label">Registry Number</label>
+                        <input type="text" name="registry_no" id="registry_no" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="province" class="control-label">Province</label>
+                        <input type="text" name="province" id="province" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="city_municipality" class="control-label">City/Municipality</label>
+                        <input type="text" name="city_municipality" id="city_municipality" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="age_at_death" class="control-label">Age at Time of Death</label>
+                        <input type="text" name="age_at_death" id="age_at_death" class="form-control rounded-0">
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -96,12 +114,72 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="mother" class="control-label">Entrepreneur of (Mother)</label>
+                        <label for="mother" class="control-label">Mother's Name</label>
                         <input type="text" name="mother" id="mother" class="form-control rounded-0" required>
                     </div>
                     <div class="form-group">
-                        <label for="father" class="control-label">Entrepreneur of (Father)</label>
+                        <label for="father" class="control-label">Father's Name</label>
                         <input type="text" name="father" id="father" class="form-control rounded-0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="place_of_death" class="control-label">Place of Death</label>
+                        <input type="text" name="place_of_death" id="place_of_death" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="religion" class="control-label">Religion</label>
+                        <input type="text" name="religion" id="religion" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="occupation" class="control-label">Occupation</label>
+                        <input type="text" name="occupation" id="occupation" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="immediate_cause" class="control-label">Immediate Cause of Death</label>
+                        <input type="text" name="immediate_cause" id="immediate_cause" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="antecedent_cause" class="control-label">Antecedent Cause of Death</label>
+                        <input type="text" name="antecedent_cause" id="antecedent_cause" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="underlying_cause" class="control-label">Underlying Cause of Death</label>
+                        <input type="text" name="underlying_cause" id="underlying_cause" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="other_conditions" class="control-label">Other Significant Conditions</label>
+                        <input type="text" name="other_conditions" id="other_conditions" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="maternal_condition" class="control-label">Maternal Condition</label>
+                        <input type="text" name="maternal_condition" id="maternal_condition" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="manner_of_death" class="control-label">Manner of Death</label>
+                        <input type="text" name="manner_of_death" id="manner_of_death" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="place_of_occurrence" class="control-label">Place of Occurrence</label>
+                        <input type="text" name="place_of_occurrence" id="place_of_occurrence" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="autopsy" class="control-label">Autopsy</label>
+                        <select name="autopsy" id="autopsy" class="form-control rounded-0">
+                            <option value="" disabled selected>Select</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="attendant" class="control-label">Attendant</label>
+                        <input type="text" name="attendant" id="attendant" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="corpse_disposal" class="control-label">Corpse Disposal</label>
+                        <input type="text" name="corpse_disposal" id="corpse_disposal" class="form-control rounded-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="cemetery_crematory" class="control-label">Cemetery or Crematory</label>
+                        <input type="text" name="cemetery_crematory" id="cemetery_crematory" class="form-control rounded-0">
                     </div>
                 </div>
             </div>
@@ -110,13 +188,11 @@
 </div>
 
 <script>
-
     // Get today's date in YYYY-MM-DD format
     const today = new Date().toISOString().split('T')[0];
 
     // Set the 'max' attribute of the date input to today's date
     document.getElementById('birthdate').setAttribute('max', today);
-
 
     $(function () {
         $('#appointment-form').submit(function (e) {
@@ -162,7 +238,6 @@
                         alert_toast("An error occurred", 'error');
                         end_loader();
                         console.log(resp);
-
                     }
                 }
             });
