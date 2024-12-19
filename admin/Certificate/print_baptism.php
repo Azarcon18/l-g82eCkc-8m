@@ -73,7 +73,7 @@ if ($id) {
         .logo {
             position: absolute;
             top: 20px;
-            left: 100px;
+            left: 50px;
             width: 100px;
             height: 100px;
         }
